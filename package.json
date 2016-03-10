@@ -4,7 +4,9 @@
   "description": "test exercise for job offer",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "test": "mocha --compilers js:babel-core/register --require ./tests/test_helper.js './tests/**/*_spec.@(js|jsx)'",
+    "test:watch": "npm test -- --watch"
   },
   "dependencies": {
     "immutable": "^3.7.6",
