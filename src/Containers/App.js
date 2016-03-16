@@ -1,9 +1,22 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import * as actionCreator from '../actions/actionCreator';
+import ExchangeRateChart from '../charts/ExchangeRateChart';
 
-export default class App extends Component {
+export class App extends Component {
   render() {
     return(
-      <div>App</div>
+      <div>
+        <ExchangeRateChart {...this.props} />
+      </div>
     );
   }
 }
+
+function mapState(state) {
+  return {
+    data: state
+  };
+}
+
+export const AppConnected = connect(mapState, actionCreator)(App);

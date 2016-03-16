@@ -5,9 +5,7 @@ import App from './App';
 export default class Root extends Component {
   render() {
     return(
-      <Provider>
-        <App />
-      </Provider>
+      <App />
     );
   }
 }

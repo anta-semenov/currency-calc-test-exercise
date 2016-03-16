@@ -1,5 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Root from './Containers/Root';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Root from './containers/Root'
+import configureStore from './store/configureStore'
 
-ReactDOM.render(<Root />, document.getElementById('root'));
+const store = configureStore()
+
+ReactDOM.render(<Root store={store} />, document.getElementById('root'))
