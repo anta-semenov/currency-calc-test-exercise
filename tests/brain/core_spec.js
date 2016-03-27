@@ -1,4 +1,4 @@
-import * as core from './../src/reducers/core'
+import * as core from '../../src/brain/core'
 import { expect } from 'chai'
 import { fromJS } from 'immutable'
 
@@ -421,13 +421,41 @@ describe('changeUseInvest', () => {
   })
   it('Should recalculate results for all currencies', () => {
     const nextState = core.changeUseInvest(commonInitialState)
-    
+
     expect(nextState.getIn(['currencies', 'EUR', 'results', period2, 'result'])).to.equal(10125)
     expect(nextState.getIn(['currencies', 'GBP', 'results', period2, 'result'])).to.equal(10075)
     expect(nextState.getIn(['currencies', 'EUR', 'results', period2, 'resultInUserCurrency'])).to.equal(12150)
     expect(nextState.getIn(['currencies', 'GBP', 'results', period2, 'resultInUserCurrency'])).to.equal(17329.0)
   })
 })
+
+describe('addCurrency', () => {
+  it('should do nothing when adding currency that already is in state', () => {
+    const currencyInfo = fromJS({})
+    const nextState = core.addCurrency(commonInitialState, 'EUR', currencyInfo)
+
+    expect(nextState).to.equal(commonInitialState)
+  })
+  it('Add currency entry, set initial ammount, results and exchange rates', () => {
+    const currencyInfo = fromJS({
+      initialExchangeRate: 68.0
+    })
+    .setIn(['exchangeRates', period1], 82.4)
+    .setIn(['exchangeRates', period2], 70.12)
+
+    const nextState = core.addCurrency(commonInitialState, 'RUB', currencyInfo)
+
+    expect(nextState.get('currencies').size).to.equal(3)
+    expect(nextState.getIn(['currencies', 'RUB', 'initialAmount'])).to.equal(0)
+    expect(nextState.getIn(['currencies', 'RUB', 'initialExchangeRate'])).to.equal(68.0)
+    expect(nextState.getIn(['currencies', 'RUB', 'results']).size).to.equal(1)
+    expect(nextState.getIn(['currencies', 'RUB', 'results', period2, 'term'])).to.equal(period2)
+    expect(nextState.getIn(['currencies', 'RUB', 'exchangeRates', period2, 'rate'])).to.equal(70.12)
+    expect(nextState.getIn(['currencies', 'RUB', 'exchangeRates', period2, 'userCanChange'])).to.equal(true)
+    expect(nextState.getIn(['currencies', 'RUB', 'exchangeRates', period1, 'userCanChange'])).to.equal(false)
+  })
+})
+
 /*describe('set state', () => {
   it('return immutable state', () => {
     const initialState = fromJS({

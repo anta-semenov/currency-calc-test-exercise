@@ -25,7 +25,7 @@ export function stopExRateChanging(state) {
   }
 }
 
-function round(amount, precision) {
+export function round(amount, precision) {
   return Math.round(amount*(10**precision))/(10**precision)
 }
 
@@ -110,7 +110,7 @@ export function changeUserCurrency(state, currencyID, currencyInfo) {
 }
 
 export function changeUseInvest(state) {
-  const useInvest = !state.get('useInvest')
+  const useInvest = !state.get('useInvest', false)
   return state.set('useInvest', !state.get('useInvest')).updateIn(['currencies'], val => val.map(item => {
     return item.set('results', item.get('results').mergeWith(
       (prev, next) => prev.withMutations(map =>
@@ -120,4 +120,30 @@ export function changeUseInvest(state) {
       item.get('exchangeRates').filter((rate, term) => item.get('results').has(term))
     ))
   }))
+}
+
+export function addCurrency(state, currencyID, currencyInfo) {
+  if (state.get('currencies').has(currencyID)) {
+    return state
+  } else {
+    return state.setIn(['currencies', currencyID], currencyInfo.withMutations(currency =>
+      currency.set('initialAmount', 0).set('initialAmountInUserCurrency', 0).set('investRate', 0).set('id', currencyID)
+      .setIn(['results'], state.get('termsHelper').map((value, key) =>
+        fromJS({
+          term: key,
+          result: 0,
+          resultInUserCurrency: 0,
+          investRate: 0
+        })
+      ))
+      .setIn(['exchangeRates'], currency.get('exchangeRates').map((value, key) => {
+        const terms = state.get('termsHelper')
+        return fromJS({
+          term: key,
+          rate: value,
+          userCanChange: terms.has(key)
+        })
+      }))
+    ))
+  }
 }
