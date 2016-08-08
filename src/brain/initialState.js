@@ -46,24 +46,32 @@ export function getInitialState(callback, baseCurrency = 'RUB') {
     .setIn(['termsHelper', item, 'investRateMult'], (index+1)*rateMultDelta)
   })
 
+  //fullfill base currency exchangerates with 1 if we have it in currencies
+  if (state.getIn(['currencies', baseCurrency])) {
+    state.setIn(['currencies', baseCurrency, 'initialExchangeRate'], 1)
+    pastTerms.forEach(date =>
+      state.setIn(['currencies', baseCurrency, 'exchangeRates', date], fromJS({term: date, rate: 1, userCanChange: false}))
+    )
+  }
+
   //get rates
   //create promisies for past periods
   const promises = pastTerms.map(date =>
     new Promise(resolve => {
-      return getExchangeRate(date, currenciesString, baseCurrency, resolve)
+      getExchangeRate(date, currenciesString, baseCurrency, resolve)
     })
   )
 
   //create promise for initial rates
   promises.push(new Promise(resolve => {
-    return getExchangeRate(startDate, currenciesString, baseCurrency, resolve)
+    getExchangeRate(startDate.getTime(), currenciesString, baseCurrency, resolve)
   }))
 
   //make request and fullfill exchangeRates in currencies
   Promise.all(promises).then(result => {
     result.forEach(exchangeRateResult => {
       exchangeRateResult.forEach(currencyRate => {
-        if (currencyRate.term === startDate) {
+        if (currencyRate.term === startDate.getTime()) {
           state.setIn(['currencies', currencyRate.currency, 'initialExchangeRate'], currencyRate.rate)
         } else {
           state.setIn(
@@ -77,18 +85,34 @@ export function getInitialState(callback, baseCurrency = 'RUB') {
         }
       })
     })
-    //fullfill future exchangesRates
+    //fullfill future exchangeRates
     state.get('currencies').keySeq().forEach(currencyID => {
       const currentRate = state.getIn(['currencies', currencyID, 'exchangeRates']).last().get('rate')
+      state.setIn(['currencies', currencyID, 'initialAmountInUserCurrency'], core.round(
+        state.getIn(['currencies', currencyID, 'initialAmount'])*state.getIn(['currencies', currencyID, 'initialExchangeRate']),
+        2
+      ))
       futureTerms.forEach(term => {
         state.setIn(['currencies', currencyID, 'exchangeRates', term], fromJS({
           term: term,
           rate: currentRate,
           userCanChange: true
         }))
+        state.setIn(['currencies', currencyID, 'results', term], fromJS({
+          term: term,
+          initialAmount: state.getIn(['currencies', currencyID, 'initialAmount']),
+          resultInUserCurrency: core.round(
+            state.getIn(['currencies', currencyID, 'initialAmount'])*state.getIn(['currencies', currencyID, 'exchangeRates', term, 'rate']),
+            2
+          ),
+          investRate: core.round(
+            state.getIn(['currencies', currencyID, 'investRate'])*state.getIn(['termsHelper', term, 'investRateMult']),
+            2
+          )
+        }))
       })
     })
 
-    callback(changeUseInvest(state.asImmutable()))
+    callback(state.asImmutable())
   })
 }

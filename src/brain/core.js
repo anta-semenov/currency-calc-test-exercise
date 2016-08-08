@@ -111,7 +111,7 @@ export function changeUserCurrency(state, currencyID, currencyInfo) {
 
 export function changeUseInvest(state) {
   const useInvest = !state.get('useInvest', false)
-  return state.set('useInvest', !state.get('useInvest')).updateIn(['currencies'], val => val.map(item => {
+  return state.set('useInvest', useInvest).updateIn(['currencies'], val => val.map(item => {
     return item.set('results', item.get('results').mergeWith(
       (prev, next) => prev.withMutations(map =>
         map.set('result', useInvest ? round(item.get('initialAmount')*(1+map.get('investRate')/100),2) : item.get('initialAmount'))

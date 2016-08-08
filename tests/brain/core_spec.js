@@ -419,6 +419,12 @@ describe('changeUseInvest', () => {
 
     expect(nextState.get('useInvest')).to.equal(false)
   })
+  it('Should set useInvest to true when initial value is undefined', () => {
+    const initialState = commonInitialState.delete('useInvest')
+    const nextState = core.changeUseInvest(initialState)
+
+    expect(nextState.get('useInvest')).to.equal(true)
+  })
   it('Should recalculate results for all currencies', () => {
     const nextState = core.changeUseInvest(commonInitialState)
 
