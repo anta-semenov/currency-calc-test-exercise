@@ -9,5 +9,7 @@ export function startExRateChanging(id, x) {
 }
 
 export function stopExRateChanging() {
-  return {type: actionTypes. STOP_EXCHANGE_RATE_CHANGING};
+  return {type: actionTypes.STOP_EXCHANGE_RATE_CHANGING};
 }
+
+export const changeCurrencyAmount = (currencyId, newAmount) => ({ type: actionTypes.CHANGE_CURRENCY_AMOUNT, currencyId, newAmount})
