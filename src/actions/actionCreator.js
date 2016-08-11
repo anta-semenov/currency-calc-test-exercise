@@ -11,3 +11,7 @@ export const changeCurrencyAmount = (currencyId, newAmount) => ({type: actionTyp
 export const changeInvestRate = (currencyId, newInvestRate) => ({type: actionTypes.CHANGE_CURRENCY_INVEST_RATE, currencyId, newInvestRate})
 
 export const addCurrency = (currencyInfo) => ({type: actionTypes.ADD_CURRENCY, currencyInfo})
+
+export const changeExchangeRate = (currencyId, term, newRate) => ({type: actionTypes.CHANGE_CURRENCY_EXCHANGE_RATE, currencyId, term, newRate})
+
+export const setState = state => ({type: actionTypes.SET_STATE, state})

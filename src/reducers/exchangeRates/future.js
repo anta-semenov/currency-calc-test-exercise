@@ -13,8 +13,8 @@ const future = (state = {}, action) => {
 
 export default future
 
-const changeExchangeRate = (state, {currencyId, term, rate}) => {
+const changeExchangeRate = (state, {currencyId, term, newRate}) => {
   const nextState = {...state}
-  nextState['' + term + currencyId].rate = rate
+  nextState['' + term + currencyId].rate = newRate
   return nextState
 }
