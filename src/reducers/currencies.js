@@ -1,6 +1,6 @@
 import * as actionTypes from '../constants/actionTypes'
 
-const reducer = (state = {}, action) => {
+const currencies = (state = {}, action) => {
   switch (action.type) {
     case actionTypes.CHANGE_CURRENCY_AMOUNT:
       return changeAmount(state, action)
@@ -9,13 +9,13 @@ const reducer = (state = {}, action) => {
     case actionTypes.ADD_CURRENCY:
       return {...state, [action.currencyInfo.id]: action.currencyInfo}
     case actionTypes.SET_STATE:
-      return action.state.currencies || state 
+      return action.state.currencies || state
     default:
       return state
   }
 }
 
-export default reducer
+export default currencies
 
 const changeAmount = (state, {currencyId, newAmount}) => {
   const nextState = {...state}
@@ -29,5 +29,5 @@ const changeInvestRate = (state, {currencyId, newInvestRate}) => {
   return nextState
 }
 
-export const currenciesIds = state => Object.keys(state)
-export const currencies = state => state
+export const getCurrenciesIds = state => Object.keys(state)
+export const getCurrencies = state => state
