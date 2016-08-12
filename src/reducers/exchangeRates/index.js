@@ -2,10 +2,10 @@ import {combineReducers} from 'redux'
 import past, * as fromPast from './past'
 import future from './future'
 
-const reducer = combineReducers(
+const reducer = combineReducers({
   past,
   future
-)
+})
 
 export default reducer
 

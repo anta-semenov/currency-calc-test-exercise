@@ -4,13 +4,17 @@ import exchangeRates, * as fromExchangeRates from './exchangeRates'
 import terms, * as fromTerms from './terms'
 
 
-const reducer = combineReducers(
+const reducer = combineReducers({
   currencies,
   exchangeRates,
   terms
-)
+})
 
 export default reducer
+
+/*
+* Selectors
+*/
 
 export const getD3ResultGraphStackInput = (state) => {
   const temp = {}
@@ -30,3 +34,8 @@ export const getD3ResultGraphStackInput = (state) => {
   Object.keys(temp).forEach(key => result.push(temp[key]))
   return result
 }
+
+//Terms
+export const getResultTerms = state => fromTerms.getTermsForResults(state.terms)
+export const getPastTerms = state => fromTerms.getPastTerms(state.terms)
+export const getCurrentTerm = state => fromTerms.getCurrentTerm(state.terms)
