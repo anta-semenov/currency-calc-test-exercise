@@ -1,4 +1,12 @@
-import { defaultFuture, defaultPast } from '../constants/termsSettings'
+export const defaultFuture = {
+  count: 4,
+  monthInterval: 3
+}
+
+export const defaultPast = {
+  count: 24,
+  monthInterval: 1
+}
 
 export default function getTerms(date, future = false, past = false) {
   if (future === true) {

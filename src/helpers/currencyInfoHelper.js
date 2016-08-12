@@ -1,6 +1,6 @@
 import { Map } from 'immutable'
 import getExchangeRate from './exchangeRatesAPIHelper'
-import getTerms from './termsHelper'
+import getTerms from './terms'
 
 export default function getCurrencyInfo(state, currencyId, callback) {
   if (state.get('currencies').has(currencyId)) {

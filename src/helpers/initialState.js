@@ -1,6 +1,5 @@
 import { Map, fromJS } from 'immutable'
-import getTerms from './termsHelper'
-import { defaultFuture } from '../constants/termsSettings'
+import getTerms, {defaultFuture} from './terms'
 import * as core from './core'
 import getExchangeRate from './exchangeRatesAPIHelper'
 import { changeUseInvest } from './core'
@@ -42,8 +41,8 @@ export function getInitialState(callback, baseCurrency = 'RUB') {
   //add time helpers to the state
   const rateMultDelta = core.round((1/12)*defaultFuture.monthInterval,2)
   futureTerms.forEach((item, index) => {
-    state.setIn(['termsHelper', item, 'term'], item)
-    .setIn(['termsHelper', item, 'investRateMult'], (index+1)*rateMultDelta)
+    state.setIn(['terms', item, 'term'], item)
+    .setIn(['terms', item, 'investRateMult'], (index+1)*rateMultDelta)
   })
 
   //fullfill base currency exchangerates with 1 if we have it in currencies
@@ -106,7 +105,7 @@ export function getInitialState(callback, baseCurrency = 'RUB') {
             2
           ),
           investRate: core.round(
-            state.getIn(['currencies', currencyID, 'investRate'])*state.getIn(['termsHelper', term, 'investRateMult']),
+            state.getIn(['currencies', currencyID, 'investRate'])*state.getIn(['terms', term, 'investRateMult']),
             2
           )
         }))

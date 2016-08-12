@@ -1,4 +1,4 @@
-import * as core from '../../src/brain/core'
+import * as core from '../../src/helpers/core'
 import { expect } from 'chai'
 import { fromJS } from 'immutable'
 
@@ -29,11 +29,11 @@ const commonInitialState = fromJS({
   },
   useInvest: false,
   userCurrency: 'USD',
-  termsHelper: {}
+  terms: {}
 }).setIn(['currencies', 'EUR', 'results', period2], fromJS({term: period2, result: 10000.0 , resultInUserCurrency: 12000.0, investRate: 1.25}))
   .setIn(['currencies', 'EUR', 'exchangeRates', period1], fromJS({term: period1, rate: 1.1, userCanChange: false}))
   .setIn(['currencies', 'EUR', 'exchangeRates', period2], fromJS({term: period2, rate: 1.2, userCanChange: true}))
-  .setIn(['termsHelper', period2], fromJS({term: period2, investRateMult: 0.25}))
+  .setIn(['terms', period2], fromJS({term: period2, investRateMult: 0.25}))
   .setIn(['currencies', 'GBP', 'results', period2], fromJS({term: period2, result: 10000.0 , resultInUserCurrency: 17200.0, investRate: 0.75}))
   .setIn(['currencies', 'GBP', 'exchangeRates', period1], fromJS({term: period1, rate: 1.68, userCanChange: false}))
   .setIn(['currencies', 'GBP', 'exchangeRates', period2], fromJS({term: period2, rate: 1.72, userCanChange: true}))
@@ -312,7 +312,7 @@ describe('changeCurrencyInvestRate', () => {
   ).setIn(
     ['currencies', 'EUR', 'exchangeRates', period3],
     fromJS({term: period3, rate: 1.3, userCanChange: true})
-  ).setIn(['termsHelper', period3], fromJS({term: period3, investRateMult: 0.5}))
+  ).setIn(['terms', period3], fromJS({term: period3, investRateMult: 0.5}))
 
   it('change invest rate in currency map', () => {
     const nextState = core.changeCurrencyInvestRate(commonInitialState, 'EUR', 7.0)

@@ -1,5 +1,5 @@
-import { getInitialState } from '../../src/brain/initialState'
-import getTerms from '../../src/brain/termsHelper'
+import { getInitialState } from '../../src/helpers/initialState'
+import getTerms from '../../src/helpers/terms'
 import { expect } from 'chai'
 
 describe('intitialState', () => {
@@ -16,11 +16,11 @@ describe('intitialState', () => {
        const futureTerms = getTerms(startDate, true)
 
        expect(state.get('currencies').size).to.equal(3)
-       //state has correct termsHelper and current date
-       expect(state.get('termsHelper').size).to.equal(4)
-       expect(state.getIn(['termsHelper', futureTerms[0], 'investRateMult'])).to.equal(0.25)
-       expect(state.getIn(['termsHelper', futureTerms[2], 'investRateMult'])).to.equal(0.75)
-       expect(state.getIn(['termsHelper', futureTerms[3], 'investRateMult'])).to.equal(1.0)
+       //state has correct terms and current date
+       expect(state.get('terms').size).to.equal(4)
+       expect(state.getIn(['terms', futureTerms[0], 'investRateMult'])).to.equal(0.25)
+       expect(state.getIn(['terms', futureTerms[2], 'investRateMult'])).to.equal(0.75)
+       expect(state.getIn(['terms', futureTerms[3], 'investRateMult'])).to.equal(1.0)
        expect(state.get('currentDate')).to.equal(startDate.getTime())
        //every currency item is a correct map
        expect(state.getIn(['currencies', 'RUB']).size).to.equal(7)

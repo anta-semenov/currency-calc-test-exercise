@@ -1,8 +1,8 @@
-import getCurrencyInfo from '../../src/brain/currencyInfoHelper'
+import getCurrencyInfo from '../../src/helpers/currencyInfoHelper'
 import chai, { expect } from 'chai'
 import chaiAsPromeses from 'chai-as-promised'
 import { fromJS } from 'immutable'
-import getExchangeRate from '../../src/brain/exchangeRatesAPIHelper'
+import getExchangeRate from '../../src/helpers/exchangeRatesAPIHelper'
 //import Promise from 'promise'
 
 chai.use(chaiAsPromeses)
@@ -33,12 +33,12 @@ const commonInitialState = fromJS({
   },
   useInvest: false,
   userCurrency: 'USD',
-  termsHelper: {},
+  terms: {},
   currentDate: new Date(2016,0,1).getTime()
 }).setIn(['currencies', 'EUR', 'results', period2], fromJS({term: period2, result: 10000.0 , resultInUserCurrency: 12000.0, investRate: 1.25}))
   .setIn(['currencies', 'EUR', 'exchangeRates', period1], fromJS({term: period1, rate: 1.1, userCanChange: false}))
   .setIn(['currencies', 'EUR', 'exchangeRates', period2], fromJS({term: period2, rate: 1.2, userCanChange: true}))
-  .setIn(['termsHelper', period2], fromJS({term: period2, investRateMult: 0.25}))
+  .setIn(['terms', period2], fromJS({term: period2, investRateMult: 0.25}))
   .setIn(['currencies', 'GBP', 'results', period2], fromJS({term: period2, result: 10000.0 , resultInUserCurrency: 17200.0, investRate: 0.75}))
   .setIn(['currencies', 'GBP', 'exchangeRates', period1], fromJS({term: period1, rate: 1.68, userCanChange: false}))
   .setIn(['currencies', 'GBP', 'exchangeRates', period2], fromJS({term: period2, rate: 1.72, userCanChange: true}))
