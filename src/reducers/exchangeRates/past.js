@@ -4,7 +4,7 @@ import {createSelector} from 'reselect'
 const past = (state = {}, action) => {
   switch (action.type) {
     case actionTypes.SET_STATE:
-      return action.state.exchangeRates.past || state
+      return action.state.exchangeRates ? action.state.exchangeRates.past || state : state
     default:
       return state
   }
