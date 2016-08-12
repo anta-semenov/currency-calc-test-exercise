@@ -1,4 +1,6 @@
-import * as actionTypes from '../constants/actionTypes';
+import * as actionTypes from '../constants/actionTypes'
+import getTerms, {defaultFuture} from '../helpers/terms'
+import {round} from '../helpers/core'
 
 export const changeCircleCoord = (y) => ({type: actionTypes.CHANGE_CIRCLE_COORD, y:y})
 
@@ -15,3 +17,24 @@ export const addCurrency = (currencyInfo) => ({type: actionTypes.ADD_CURRENCY, c
 export const changeExchangeRate = (currencyId, term, newRate) => ({type: actionTypes.CHANGE_CURRENCY_EXCHANGE_RATE, currencyId, term, newRate})
 
 export const setState = state => ({type: actionTypes.SET_STATE, state})
+
+/*
+* Thunks
+*/
+
+//Initialize terms, calc invest rate multiplicators
+export const initTerms = startDate => dispatch => {
+  const pastTerms = getTerms(startDate, false, true).map(item => ({term: item}))
+
+  const rateMultiplicatorDelta = round((1/12)*defaultFuture.monthInterval,2)
+  const futureTerms = getTerms(startDate, defaultFuture).map((item, index) => ({
+    term: item,
+    investRateMultiplicator: (index+1)*rateMultiplicatorDelta
+  }))
+
+  dispatch(setState({terms: [
+    ...pastTerms,
+    {term: startDate, isInitial: true},
+    ...futureTerms
+  ]}))
+}
