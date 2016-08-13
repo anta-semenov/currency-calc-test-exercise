@@ -1,6 +1,27 @@
 import * as actionTypes from '../constants/actionTypes'
 
-const currencies = (state = {}, action) => {
+const initialState = {
+  RUB: {
+    id: 'RUB',
+    label: '₽',
+    initialAmount: 0,
+    investRate: 0
+  },
+  USD: {
+    id: 'USD',
+    label: '$',
+    initialAmount: 0,
+    investRate: 0
+  },
+  EUR: {
+    id: 'EUR',
+    label: '€',
+    initialAmount: 0,
+    investRate: 0
+  }
+}
+
+const currencies = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.CHANGE_CURRENCY_AMOUNT:
       return changeAmount(state, action)
