@@ -14,8 +14,8 @@ const enhancer = compose(
   applyMiddleware(thunk)
 );
 
-export default function configureStore(initialState) {
-  const store = createStore(rootReducer, initialState, enhancer);
+export default function configureStore() {
+  const store = createStore(rootReducer, enhancer);
 
   if (module.hot) {
     module.hot.accept('../reducers', () =>
