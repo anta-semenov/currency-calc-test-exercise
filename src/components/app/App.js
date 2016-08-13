@@ -1,8 +1,9 @@
-import React from 'react';
+import React from 'react'
+import Table from '../table/tableContainer'
 
 const App = () => (
   <div>
-
+    <Table />
   </div>
 )
 
