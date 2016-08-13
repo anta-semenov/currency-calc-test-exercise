@@ -1,37 +1,65 @@
-import {CHANGE_CIRCLE_COORD, START_EXCHANGE_RATE_CHANGING, STOP_EXCHANGE_RATE_CHANGING} from '../constants/actionTypes';
-import {fromJS} from 'immutable';
-import {changeExRateCoordinate, startExRateChanging, stopExRateChanging} from './core';
+import {combineReducers} from 'redux'
+import currencies, * as fromCurrencies from './currencies'
+import exchangeRates, * as fromExchangeRates from './exchangeRates'
+import terms, * as fromTerms from './terms'
+import uiState, * as fromUiState from './uiState'
+import {createSelector} from 'reselect'
 
-const initialState = fromJS({
-  circles: [
-    {
-      id:1,
-      rates: [
-        {x:30, y:50},
-        {x:60, y:100}
-      ],
-      color: 'rgb(235, 135, 72)'
-    },
-    {
-      id: 2,
-      rates: [
-        {x:30, y:30},
-        {x:60, y:150}
-      ],
-      color: 'rgb(139, 84, 228)'
-    }
-  ]
-});
 
-export default function reducer(state = initialState, action) {
-  switch (action.type) {
-    case CHANGE_CIRCLE_COORD:
-      return changeExRateCoordinate(state, action.y);
-    case START_EXCHANGE_RATE_CHANGING:
-      return startExRateChanging(state, action.id, action.x);
-    case STOP_EXCHANGE_RATE_CHANGING:
-      return stopExRateChanging(state);
-    default:
-      return state;
-  }
+const reducer = combineReducers({
+  currencies,
+  exchangeRates,
+  terms,
+  uiState
+})
+
+export default reducer
+
+/*
+* Selectors
+*/
+
+export const getD3ResultGraphStackInput = (state) => {
+  const temp = {}
+  const currenciesIds = getCurrenciesIds(state)
+  fromTerms.getTermsForResults(state.terms).forEach(termItem => {
+    const {termId, investRateMultiplicator} = termItem
+    currenciesIds.forEach(currencyId => {
+      if (!temp[termId]) {
+        temp[termId] = {term: termId}
+      }
+      const {initialAmount, investRate} = state.currencies[currencyId]
+      temp[termId][currencyId] = initialAmount*(state.useInvest ? 1+(investRateMultiplicator*investRate)/100 : 1)*fromExchangeRates.getAllExchangeRates(state.exchangeRates)[''+termId+currencyId]
+    })
+  })
+
+  const result = []
+  Object.keys(temp).forEach(key => result.push(temp[key]))
+  return result
 }
+
+//Terms
+export const getResultTerms = state => fromTerms.getTermsForResults(state.terms)
+export const getPastTerms = state => fromTerms.getPastTerms(state.terms)
+export const getCurrentTerm = state => fromTerms.getCurrentTerm(state.terms)
+
+//Currencies
+const getCurrenciesIds = state => fromCurrencies.getCurrenciesIds(state.currencies)
+const availableCurrencies = [
+  {id: 'RUB', label: '₽'},
+  {id: 'USD', label: '$'},
+  {id: 'EUR', label: '€'},
+  {id: 'JPY', label: '¥'},
+  {id: 'CHF', label: 'CHF'},
+  {id: 'GBP', label: '£'},
+  {id: 'ILS', label: '₪'},
+  {id: 'CNY', label: 'CNY'}
+]
+export const getCurrenciesForAdding = createSelector(
+  getCurrenciesIds,
+  currenciesInUse => availableCurrencies.filter(item => !(item.id in currenciesInUse))
+)
+
+//UiState
+export const getLoading = state => fromUiState.getLoading(state.uiState)
+export const getError = state => fromUiState.getError(state.uiState)

@@ -23,12 +23,12 @@ module.exports = {
       include: path.join(__dirname, 'src')
     },
     {
-      test: /\.css$/,
-      loader: 'style-loader!css-loader!postcss-loader',
+      test: /\.less$/,
+      loader: 'style-loader!css-loader!postcss-loader!less-loader',
       include: path.join(__dirname, 'src')
     }],
     postcss: function () {
-      return [require('autoprefixer'), require('cssnext')];
+      return [require('autoprefixer'), require('cssnano')];
     }
   }
 };

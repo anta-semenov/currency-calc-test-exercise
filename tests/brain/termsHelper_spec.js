@@ -1,9 +1,9 @@
-import getTerms from '../../src/brain/termsHelper'
+import getTerms from '../../src/helpers/terms'
 import { expect } from 'chai'
 
 const date = new Date(2016,3,4)
 
-describe('termsHelper', () => {
+describe('terms', () => {
   it('return empty array', () => {
     expect(getTerms(date)).to.deep.equal([])
   })

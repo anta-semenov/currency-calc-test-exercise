@@ -1,7 +1,8 @@
-import {createStore, compose} from 'redux';
+import {createStore, compose, applyMiddleware} from 'redux';
 import {persistState} from 'redux-devtools';
 import rootReducer from '../reducers';
 import DevTools from '../containers/DevTools';
+import thunk from 'redux-thunk'
 
 const enhancer = compose(
   DevTools.instrument(),
@@ -9,11 +10,12 @@ const enhancer = compose(
     window.location.href.match(
       /[?&]debug_session=([^&#]+)\b/
     )
-  )
+  ),
+  applyMiddleware(thunk)
 );
 
-export default function configureStore(initialState) {
-  const store = createStore(rootReducer, initialState, enhancer);
+export default function configureStore() {
+  const store = createStore(rootReducer, enhancer);
 
   if (module.hot) {
     module.hot.accept('../reducers', () =>
