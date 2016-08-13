@@ -9,7 +9,8 @@ export const initializeState = (store) => {
 
   //Init or reinit state
   const currentDate = +new Date()
-  if (!savedState || !savedState.currentDate || currentDate - savedState.currentDate > 5*86400000) {
+  const stateCurrentDate = savedState ? fromReducer.getCurrentTerm(savedState) : undefined
+  if (!stateCurrentDate || currentDate - stateCurrentDate > 5*86400000) {
     let startDate = new Date
     startDate.setHours(0)
     startDate.setMinutes(0)
