@@ -1,6 +1,6 @@
 /*global Promise*/
 import XMLHttpRequest from 'xhr2'
-import {round} from './core'
+import round from 'lodash/round'
 
 const baseURL = 'http://api.fixer.io/'
 

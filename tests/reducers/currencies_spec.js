@@ -54,4 +54,20 @@ describe('currencies', () => {
 
     expect(reducer(initialState, action)).to.deep.equal(nextState)
   })
+
+  it('Should change user currency', () => {
+    const initialState = {
+      EUR: {id: 'EUR', investRate: 5.5, isUserCurrency: true},
+      USD: {id: 'USD', investRate: 5.5}
+    }
+
+    const action = actions.changeUserCurrencyEnd('USD', {})
+
+    const expectedState = {
+      EUR: {id: 'EUR', investRate: 5.5},
+      USD: {id: 'USD', investRate: 5.5, isUserCurrency: true}
+    }
+
+    expect(reducer(initialState, action)).to.deep.equal(expectedState)
+  })
 })

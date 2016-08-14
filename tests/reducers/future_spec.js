@@ -1,6 +1,6 @@
 import {expect} from 'chai'
 import future from '../../src/reducers/exchangeRates/future'
-import {addCurrencyResult, changeExchangeRate} from '../../src/actions/actionCreator'
+import {addCurrencyResult, changeExchangeRate, changeUserCurrencyEnd} from '../../src/actions/actionCreator'
 
 describe('Future reducer', () => {
   it('Should handle ADD_CURRENCY', () => {
@@ -173,6 +173,61 @@ describe('Future reducer', () => {
         currencyId: 'GBP',
         term: new Date(2016,3,4).getTime(),
         rate: 1.78
+      }
+    }
+
+    expect(future(initialState, action)).to.deep.equal(expectedState)
+  })
+
+  it('Should handle CHANGE_USER_CURRENCY', () => {
+    const initialState = {
+      ['' + new Date(2016,2,4).getTime() + 'EUR']: {
+        currencyId: 'EUR',
+        term: new Date(2016,2,4).getTime(),
+        rate: 0.91
+      },
+      ['' + new Date(2016,3,4).getTime() + 'EUR']: {
+        currencyId: 'EUR',
+        term: new Date(2016,3,4).getTime(),
+        rate: 0.87
+      },
+      ['' + new Date(2016,2,4).getTime() + 'GBP']: {
+        currencyId: 'GBP',
+        term: new Date(2016,2,4).getTime(),
+        rate: 1.58
+      },
+      ['' + new Date(2016,3,4).getTime() + 'GBP']: {
+        currencyId: 'GBP',
+        term: new Date(2016,3,4).getTime(),
+        rate: 1.78
+      }
+    }
+
+    const action = changeUserCurrencyEnd('EUR', {
+      [new Date(2016,2,4).getTime()]: 1.0989,
+      [new Date(2016,3,4).getTime()]: 1.2821
+    })
+
+    const expectedState = {
+      ['' + new Date(2016,2,4).getTime() + 'EUR']: {
+        currencyId: 'EUR',
+        term: new Date(2016,2,4).getTime(),
+        rate: 1.0
+      },
+      ['' + new Date(2016,3,4).getTime() + 'EUR']: {
+        currencyId: 'EUR',
+        term: new Date(2016,3,4).getTime(),
+        rate: 1.0
+      },
+      ['' + new Date(2016,2,4).getTime() + 'GBP']: {
+        currencyId: 'GBP',
+        term: new Date(2016,2,4).getTime(),
+        rate: 1.7363
+      },
+      ['' + new Date(2016,3,4).getTime() + 'GBP']: {
+        currencyId: 'GBP',
+        term: new Date(2016,3,4).getTime(),
+        rate: 2.2821
       }
     }
 
