@@ -11,7 +11,7 @@ describe('terms', () => {
     const result = [
       new Date(2016,6,4).getTime(),
       new Date(2016,9,4).getTime(),
-      new Date(2016,12,4).getTime(),
+      new Date(2017,0,4).getTime(),
       new Date(2017,3,4).getTime()
     ]
 
@@ -39,7 +39,7 @@ describe('terms', () => {
       new Date(2014,9,4).getTime(),
       new Date(2014,10,4).getTime(),
       new Date(2014,11,4).getTime(),
-      new Date(2014,12,4).getTime(),
+      new Date(2015,0,4).getTime(),
       new Date(2015,1,4).getTime(),
       new Date(2015,2,4).getTime(),
       new Date(2015,3,4).getTime(),
@@ -51,7 +51,7 @@ describe('terms', () => {
       new Date(2015,9,4).getTime(),
       new Date(2015,10,4).getTime(),
       new Date(2015,11,4).getTime(),
-      new Date(2015,12,4).getTime(),
+      new Date(2016,0,4).getTime(),
       new Date(2016,1,4).getTime(),
       new Date(2016,2,4).getTime()
     ]

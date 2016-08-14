@@ -1,5 +1,7 @@
 import {fromJS} from 'immutable';
 
+export const round = (amount, precision) => Math.round(amount*(10**precision))/(10**precision)
+
 export function changeExRateCoordinate(state, newExRate) {
   if (state.get('currentCircle')) {
     const currentId = state.get('currentCircle').get('id');
@@ -23,10 +25,6 @@ export function stopExRateChanging(state) {
   } else {
     return state;
   }
-}
-
-export function round(amount, precision) {
-  return Math.round(amount*(10**precision))/(10**precision)
 }
 
 export function recalculateResult(state, currencyID, term) {

@@ -1,7 +1,7 @@
 import { Map, fromJS } from 'immutable'
 import getTerms, {defaultFuture} from './terms'
 import * as core from './core'
-import getExchangeRate from './exchangeRatesAPIHelper'
+import getExchangeRate from './exchangeRatesApi'
 import { changeUseInvest } from './core'
 
 const defaultCurrencies = fromJS({

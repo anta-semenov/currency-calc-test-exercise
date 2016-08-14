@@ -2,7 +2,7 @@ import getCurrencyInfo from '../../src/helpers/currencyInfoHelper'
 import chai, { expect } from 'chai'
 import chaiAsPromeses from 'chai-as-promised'
 import { fromJS } from 'immutable'
-import getExchangeRate from '../../src/helpers/exchangeRatesAPIHelper'
+import getExchangeRate from '../../src/helpers/exchangeRatesApi'
 //import Promise from 'promise'
 
 chai.use(chaiAsPromeses)
