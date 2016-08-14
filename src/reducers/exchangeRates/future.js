@@ -1,4 +1,4 @@
-import {SET_STATE, CHANGE_CURRENCY_EXCHANGE_RATE} from '../../constants/actionTypes'
+import {SET_STATE, CHANGE_CURRENCY_EXCHANGE_RATE, ADD_CURRENCY} from '../../constants/actionTypes'
 
 const future = (state = {}, action) => {
   switch (action.type) {
@@ -6,6 +6,8 @@ const future = (state = {}, action) => {
       return action.state.exchangeRates ? action.state.exchangeRates.future || state : state
     case CHANGE_CURRENCY_EXCHANGE_RATE:
       return changeExchangeRate(state, action)
+    case ADD_CURRENCY:
+      return {...state, ...action.futureExchangeRates}
     default:
       return state
   }

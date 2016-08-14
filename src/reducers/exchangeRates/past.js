@@ -5,6 +5,8 @@ const past = (state = {}, action) => {
   switch (action.type) {
     case actionTypes.SET_STATE:
       return action.state.exchangeRates ? action.state.exchangeRates.past || state : state
+    case actionTypes.ADD_CURRENCY:
+      return {...state, ...action.pastExchangeRates}
     default:
       return state
   }
