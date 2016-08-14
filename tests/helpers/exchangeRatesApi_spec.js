@@ -14,25 +14,25 @@ describe('exchange rates api', () => {
       ['' + new Date(2016,0,4).getTime() + 'EUR']: {
         currencyId: 'EUR',
         term: new Date(2016,0,4).getTime(),
-        rate: 0.9176,
+        rate: 1.0898,
         isInitial: undefined
       },
       ['' + new Date(2016,1,4).getTime() + 'EUR']: {
         currencyId: 'EUR',
         term: new Date(2016,1,4).getTime(),
-        rate: 0.89238,
+        rate: 1.1206,
         isInitial: undefined
       },
       ['' + new Date(2016,2,4).getTime() + 'EUR']: {
         currencyId: 'EUR',
         term: new Date(2016,2,4).getTime(),
-        rate: 0.91158,
+        rate: 1.0970,
         isInitial: undefined
       },
       ['' + new Date(2016,3,4).getTime() + 'EUR']: {
         currencyId: 'EUR',
         term: new Date(2016,3,4).getTime(),
-        rate: 0.87873,
+        rate: 1.1380,
         isInitial: true
       }
     }

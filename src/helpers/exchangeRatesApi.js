@@ -26,7 +26,7 @@ const getExchangeRate = (date, currencies, baseCurrency = 'USD') => new Promise(
           return {
             currency: key,
             term: date instanceof Date ? date.getTime() : date,
-            rate: response[key]
+            rate: round(1/response[key],4)
           }
         })
         resolve(result)
