@@ -1,8 +1,9 @@
-/*global Promise*/
 import * as actionTypes from '../constants/actionTypes'
 import getTerms, {defaultFuture} from '../helpers/terms'
 import {round} from '../helpers/core'
-import getExchangeRate from '../helpers/exchangeRatesApi'
+import {getPastExchangeRates, getFutureExchangeRates} from '../helpers/exchangeRatesApi'
+
+export const setState = state => ({type: actionTypes.SET_STATE, state})
 
 export const changeCircleCoord = (y) => ({type: actionTypes.CHANGE_CIRCLE_COORD, y:y})
 
@@ -14,11 +15,9 @@ export const changeCurrencyAmount = (currencyId, newAmount) => ({type: actionTyp
 
 export const changeInvestRate = (currencyId, newInvestRate) => ({type: actionTypes.CHANGE_CURRENCY_INVEST_RATE, currencyId, newInvestRate})
 
-const addCurrencyResult = (currencyInfo, pastExchangeRates, futureExchangeRates) => ({type: actionTypes.ADD_CURRENCY, currencyInfo, pastExchangeRates, futureExchangeRates})
+export const addCurrencyResult = (currencyInfo, pastExchangeRates, futureExchangeRates) => ({type: actionTypes.ADD_CURRENCY, currencyInfo, pastExchangeRates, futureExchangeRates})
 
 export const changeExchangeRate = (currencyId, term, newRate) => ({type: actionTypes.CHANGE_CURRENCY_EXCHANGE_RATE, currencyId, term, newRate})
-
-export const setState = state => ({type: actionTypes.SET_STATE, state})
 
 export const requestRates = () => ({type: actionTypes.REQUEST_RATES})
 export const recieveRates = () => ({type: actionTypes.RECIEVE_RATES})
@@ -47,54 +46,35 @@ export const initTerms = startDate => dispatch => {
 
 //Initialize past exchange rates
 export const initPastExchangeRates = (pastTerms, currentTerm, currencies, baseCurrency) => dispatch => {
-  const pastRequest = pastTerms.map(term =>
-    new Promise(resolve => {
-      getExchangeRate(term, currencies, baseCurrency, resolve)
-    })
-  )
-
-  const currentRequest = new Promise(resolve => getExchangeRate(currentTerm, currencies, baseCurrency, resolve))
-
-  Promise.all([...pastRequest, currentRequest]).then(
-    response => {
-      const past = {}
-      response.forEach(exchangeRateResult => {
-        exchangeRateResult.forEach(currencyRate => {
-          //fullfill past rates
-          past['' + currencyRate.term + currencyRate.currency] = {
-            term: currencyRate.term,
-            currencyId: currencyRate.currency,
-            rate: currencyRate.rate,
-            isInitial: currencyRate.term === currentTerm ? true : undefined
-          }
-        })
-      })
-      dispatch(setState({exchangeRates: {past}}))
-    },
-    error => {
-      dispatch(errorRates(error))
-    }
+  getPastExchangeRates(pastTerms, currentTerm, currencies, baseCurrency).then(
+    response => {dispatch(setState({exchangeRates: {past: response}}))},
+    error => {dispatch(errorRates(error))}
   )
 }
 
 //Initialize future exchange rates
 //We can have future rates from load state, so when we have it we need just change terms
 export const initFutureExchangeRates = (futureTerms, currentRates) => dispatch => {
-  const future = {}
-  const currenciesIds = Object.keys(currentRates)
-  futureTerms.forEach((term, index) => {
-    currenciesIds.forEach(currencyId => {
-      future['' + term + currencyId] = {
-        term,
-        currencyId,
-        rate: round(currentRates[currencyId].rate*(1+0.05*(index+1)), 4)
-      }
-    })
-  })
-  dispatch(setState({exchangeRates: {future}}))
+  dispatch(setState({exchangeRates: {future: getFutureExchangeRates(futureTerms, currentRates)}}))
 }
 
 //Add currency
-export const addCurrency = (currency, pastTerms, futureTerms) => {
+export const addCurrency = (currency, baseCurrency, pastTerms, futureTerms, currentTerm) => dispatch => {
   const currencyInfo = {...currency, initialAmount: 0, investRate:0}
+  getPastExchangeRates(pastTerms, currentTerm, [currency.id], baseCurrency).then(
+    response => {
+      const currentRates = {
+        [response[''+currentTerm+currency.id].currencyId]: {rate: response[''+currentTerm+currency.id].rate}
+      }
+      dispatch(addCurrencyResult(
+        currencyInfo,
+        response,
+        getFutureExchangeRates(futureTerms, currentRates)
+      ))
+    },
+    error => {
+      dispatch(errorRates(error))
+      dispatch(addCurrencyResult(currencyInfo, {}, {}))
+    }
+  )
 }
