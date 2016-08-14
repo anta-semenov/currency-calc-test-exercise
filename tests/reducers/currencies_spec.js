@@ -40,7 +40,7 @@ describe('currencies', () => {
       USD: {id: 'USD', investRate: 5.5}
     }
 
-    const action = actions.addCurrency({
+    const action = actions.addCurrencyResult({
       id: 'GBP',
       initialAmount: 3000,
       investRate: 4.0
