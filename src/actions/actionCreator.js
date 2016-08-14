@@ -14,15 +14,15 @@ export const changeCurrencyAmount = (currencyId, newAmount) => ({type: actionTyp
 
 export const changeInvestRate = (currencyId, newInvestRate) => ({type: actionTypes.CHANGE_CURRENCY_INVEST_RATE, currencyId, newInvestRate})
 
-export const addCurrency = (currencyInfo) => ({type: actionTypes.ADD_CURRENCY, currencyInfo})
+const addCurrencyResult = (currencyInfo, pastExchangeRates, futureExchangeRates) => ({type: actionTypes.ADD_CURRENCY, currencyInfo, pastExchangeRates, futureExchangeRates})
 
 export const changeExchangeRate = (currencyId, term, newRate) => ({type: actionTypes.CHANGE_CURRENCY_EXCHANGE_RATE, currencyId, term, newRate})
 
 export const setState = state => ({type: actionTypes.SET_STATE, state})
 
-export const initStart = () => ({type: actionTypes.REQUEST_RATES})
-export const initSuccess = () => ({type: actionTypes.RECIEVE_RATES})
-export const initError = (error) => ({type: actionTypes.ERROR_RATES, error})
+export const requestRates = () => ({type: actionTypes.REQUEST_RATES})
+export const recieveRates = () => ({type: actionTypes.RECIEVE_RATES})
+export const errorRates = (error) => ({type: actionTypes.ERROR_RATES, error})
 
 /*
 * Thunks
@@ -72,7 +72,7 @@ export const initPastExchangeRates = (pastTerms, currentTerm, currencies, baseCu
       dispatch(setState({exchangeRates: {past}}))
     },
     error => {
-      dispatch(initError(error))
+      dispatch(errorRates(error))
     }
   )
 }
@@ -92,4 +92,9 @@ export const initFutureExchangeRates = (futureTerms, currentRates) => dispatch =
     })
   })
   dispatch(setState({exchangeRates: {future}}))
+}
+
+//Add currency
+export const addCurrency = (currency, pastTerms, futureTerms) => {
+  const currencyInfo = {...currency, initialAmount: 0, investRate:0}
 }
