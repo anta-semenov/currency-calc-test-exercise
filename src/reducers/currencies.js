@@ -1,30 +1,7 @@
 import * as actionTypes from '../constants/actionTypes'
 import {createSelector} from 'reselect'
-import mapValues from 'lodash/mapValues'
 
-const initialState = {
-  RUB: {
-    id: 'RUB',
-    label: '₽',
-    initialAmount: 0,
-    investRate: 0,
-    isUserCurrency: true
-  },
-  USD: {
-    id: 'USD',
-    label: '$',
-    initialAmount: 0,
-    investRate: 0
-  },
-  EUR: {
-    id: 'EUR',
-    label: '€',
-    initialAmount: 0,
-    investRate: 0
-  }
-}
-
-const currencies = (state = initialState, action) => {
+const currencies = (state = {}, action) => {
   switch (action.type) {
     case actionTypes.CHANGE_CURRENCY_AMOUNT:
       return changeAmount(state, action)
@@ -34,8 +11,6 @@ const currencies = (state = initialState, action) => {
       return {...state, [action.currencyInfo.id]: action.currencyInfo}
     case actionTypes.SET_STATE:
       return action.state.currencies || state
-    case actionTypes.CHANGE_USER_CURRENCY:
-      return changeUserCurrency(state, action.newUserCurrencyId)
     default:
       return state
   }
@@ -54,19 +29,6 @@ const changeInvestRate = (state, {currencyId, newInvestRate}) => {
   nextState[currencyId].investRate = newInvestRate
   return nextState
 }
-
-const changeUserCurrency = (state, newUserCurrencyId) => mapValues(
-  state,
-  (item, key) => {
-    const newItem = {...item}
-    if (key === newUserCurrencyId) {
-      newItem.isUserCurrency = true
-    } else {
-      delete newItem.isUserCurrency
-    }
-    return newItem
-  }
-)
 
 export const getCurrenciesIds = state => Object.keys(state)
 export const getCurrencies = state => state

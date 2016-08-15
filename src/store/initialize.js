@@ -20,12 +20,31 @@ export const initializeState = (store) => {
 
     store.dispatch(actions.initStart())
     store.dispatch(actions.initTerms(startDate))
+    store.dispatch(actions.changeUserCurrencyEnd('RUB'))
+
+    //add first three cyrrencies it can be changed for more intelect way latter
+    const currenciesForAdd = fromReducer.getCurrenciesForAdding(store.getState())
+    store.dispatch(actions.addCurrencyResult({
+      ...currenciesForAdd[0],
+      initialAmount: 0,
+      investRate: 0
+    }, {}, {}))
+    store.dispatch(actions.addCurrencyResult({
+      ...currenciesForAdd[1],
+      initialAmount: 0,
+      investRate: 0
+    }, {}, {}))
+    store.dispatch(actions.addCurrencyResult({
+      ...currenciesForAdd[2],
+      initialAmount: 0,
+      investRate: 0
+    }, {}, {}))
 
     store.dispatch(actions.initPastExchangeRates(
       fromReducer.getPastTerms(store.getState()),
       fromReducer.getCurrentTerm(store.getState()),
       fromReducer.getCurrenciesIds(store.getState()),
-      fromReducer.getBaseCurrency(store.getState())
+      fromReducer.getUserCurrency(store.getState())
     ))
 
     store.dispatch(actions.initFutureExchangeRates(
