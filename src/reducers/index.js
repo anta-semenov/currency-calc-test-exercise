@@ -3,6 +3,7 @@ import currencies, * as fromCurrencies from './currencies'
 import exchangeRates, * as fromExchangeRates from './exchangeRates'
 import terms, * as fromTerms from './terms'
 import uiState, * as fromUiState from './uiState'
+import userCurrency from './userCurrency'
 import {createSelector} from 'reselect'
 
 
@@ -10,7 +11,8 @@ const reducer = combineReducers({
   currencies,
   exchangeRates,
   terms,
-  uiState
+  uiState,
+  userCurrency
 })
 
 export default reducer
@@ -19,7 +21,8 @@ export default reducer
 * Selectors
 */
 
-export const getD3ResultGraphStackInput = (state) => {
+//Index selectors
+export const getD3ResultGraphStackInput = state => {
   const temp = {}
   const currenciesIds = getCurrenciesIds(state)
   fromTerms.getTermsForResults(state.terms).forEach(termItem => {
@@ -46,19 +49,20 @@ export const getCurrentTerm = state => fromTerms.getCurrentTerm(state.terms)
 //Currencies
 const getCurrenciesIds = state => fromCurrencies.getCurrenciesIds(state.currencies)
 const availableCurrencies = [
-  {id: 'RUB', label: '₽'},
-  {id: 'USD', label: '$'},
-  {id: 'EUR', label: '€'},
-  {id: 'JPY', label: '¥'},
-  {id: 'CHF', label: 'CHF'},
-  {id: 'GBP', label: '£'},
-  {id: 'ILS', label: '₪'},
-  {id: 'CNY', label: 'CNY'}
+  {id: 'RUB', label: '₽', color: '#376be0'},
+  {id: 'USD', label: '$', color: '#0d7c22'},
+  {id: 'EUR', label: '€', color: '#d7da2d'},
+  {id: 'JPY', label: '¥', color: '#ec1919'},
+  {id: 'CHF', label: 'CHF', color: '#37e0e0'},
+  {id: 'GBP', label: '£', color: '#8c37e0'},
+  {id: 'ILS', label: '₪', color: '#b36526'},
+  {id: 'CNY', label: 'CNY', color: '#ec510e'}
 ]
 export const getCurrenciesForAdding = createSelector(
   getCurrenciesIds,
   currenciesInUse => availableCurrencies.filter(item => !(item.id in currenciesInUse))
 )
+export const getUserCurrency = state => state.userCurrency
 
 //UiState
 export const getLoading = state => fromUiState.getLoading(state.uiState)
