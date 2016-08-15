@@ -7,28 +7,16 @@ import {getPastExchangeRates, getFutureExchangeRates} from '../helpers/exchangeR
 export const setState = state => ({type: actionTypes.SET_STATE, state})
 
 export const changeCircleCoord = (y) => ({type: actionTypes.CHANGE_CIRCLE_COORD, y:y})
-
 export const startExRateChanging = (id, x) => ({type: actionTypes.START_EXCHANGE_RATE_CHANGING, id: id, x: x})
-
 export const stopExRateChanging = () => ({type: actionTypes.STOP_EXCHANGE_RATE_CHANGING})
 
 export const changeCurrencyAmount = (currencyId, newAmount) => ({type: actionTypes.CHANGE_CURRENCY_AMOUNT, currencyId, newAmount})
-
 export const changeInvestRate = (currencyId, newInvestRate) => ({type: actionTypes.CHANGE_CURRENCY_INVEST_RATE, currencyId, newInvestRate})
-
-export const addCurrencyResult = (currencyInfo, pastExchangeRates, futureExchangeRates) => ({type: actionTypes.ADD_CURRENCY, currencyInfo, pastExchangeRates, futureExchangeRates})
-
 export const changeExchangeRate = (currencyId, term, newRate) => ({type: actionTypes.CHANGE_CURRENCY_EXCHANGE_RATE, currencyId, term, newRate})
-
-export const changeUserCurrencyEnd = (newUserCurrencyId, termsRatesRatio) => ({type: actionTypes.CHANGE_USER_CURRENCY, newUserCurrencyId, termsRatesRatio})
 
 export const requestRates = () => ({type: actionTypes.REQUEST_RATES})
 export const recieveRates = () => ({type: actionTypes.RECIEVE_RATES})
 export const errorRates = (error) => ({type: actionTypes.ERROR_RATES, error})
-
-/*
-* Thunks
-*/
 
 //Initialize terms, calc invest rate multiplicators
 export const initTerms = startDate => dispatch => {
@@ -62,6 +50,7 @@ export const initFutureExchangeRates = (futureTerms, currentRates) => dispatch =
 }
 
 //Add currency
+export const addCurrencyResult = (currencyInfo, pastExchangeRates, futureExchangeRates) => ({type: actionTypes.ADD_CURRENCY, currencyInfo, pastExchangeRates, futureExchangeRates})
 export const addCurrency = (currency, baseCurrency, pastTerms, futureTerms, currentTerm) => dispatch => {
   const currencyInfo = {...currency, initialAmount: 0, investRate:0}
   getPastExchangeRates(pastTerms, currentTerm, [currency.id], baseCurrency).then(
@@ -84,6 +73,7 @@ export const addCurrency = (currency, baseCurrency, pastTerms, futureTerms, curr
 }
 
 //Change user currency
+export const changeUserCurrencyEnd = (newUserCurrencyId, termsRatesRatio) => ({type: actionTypes.CHANGE_USER_CURRENCY, newUserCurrencyId, termsRatesRatio})
 export const changeUserCurrency = (newUserCurrencyId, userCurrency, pastTerms, futureTerms, currentTerm) => dispatch => {
   getPastExchangeRates(pastTerms, currentTerm, [userCurrency], newUserCurrencyId).then(
     response => {
