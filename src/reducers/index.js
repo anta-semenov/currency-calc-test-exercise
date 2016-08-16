@@ -55,7 +55,7 @@ export const getCurrenciesIds = state => fromCurrencies.getCurrenciesIds(state.c
 const availableCurrencies = [
   {currencyId: 'RUB', label: '₽', color: '#376be0'},
   {currencyId: 'USD', label: '$', color: '#0d7c22'},
-  {currencyId: 'EUR', label: '€', color: '#d7da2d'},
+  {currencyId: 'EUR', label: '€', color: '#FE9927'},
   {currencyId: 'JPY', label: '¥', color: '#ec1919'},
   {currencyId: 'CHF', label: 'CHF', color: '#37e0e0'},
   {currencyId: 'GBP', label: '£', color: '#8c37e0'},

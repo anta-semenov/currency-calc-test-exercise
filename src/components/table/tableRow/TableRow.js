@@ -1,18 +1,41 @@
 import React from 'react'
 import './TableRow.less'
+import classnames from 'classnames'
 
-const TableRow = (props) => (
-  <tr className='table-row'>
-    <td>
-      <div>{props.label}</div>
-      <div>{props.initialAmount}</div>
-    </td>
-    <td>{props.amountInUserCurrency}</td>
-    <td>
-      <input value={props.investRate} onChange={(e) => props.changeInvestRate(e.target.value)}/>
-    </td>
-  </tr>
-)
+const numberInput = (e, action) => {
+  const input = new Number(e.target.value)
+  if (input && !isNaN(input)) {
+    action(e.target.value)
+  }
+}
+
+const TableRow = (props) => {
+  const investStyle = classnames({
+    'table-row--invest': true,
+    hidden: !props.useInvest
+  })
+  return(
+    <div className='table-row'>
+      <div className='table-row--label-amount-cell'>
+        <div className='table-row--label' style={{backgroundColor: props.color}}>{props.label}</div>
+        <input
+          className='table-row--amount'
+          placeholder='0'
+          value={props.initialAmount === 0 ? undefined : props.initialAmount}
+          onChange={(e) => numberInput(e, props.changeAmount)}
+        />
+      </div>
+      <div className='table-row-user--currency-amount'>{props.amountInUserCurrency.toLocaleString()}</div>
+      <input
+        className={investStyle}
+        disabled={!props.useInvest}
+        placeholder='0'
+        value={props.investRate === 0 && props.useInvest ? undefined : props.investRate}
+        onChange={(e) => numberInput(e, props.changeInvestRate)}
+      />
+    </div>
+  )
+}
 
 TableRow.propTypes = {
   label: React.PropTypes.string.isRequired,

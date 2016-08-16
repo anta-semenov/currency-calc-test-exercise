@@ -2,7 +2,7 @@ import React from 'react'
 import Table from '../table/tableContainer'
 
 const App = () => (
-  <div>
+  <div className='app'>
     <Table />
   </div>
 )

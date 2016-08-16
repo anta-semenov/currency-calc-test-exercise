@@ -1,0 +1,65 @@
+@import '../../../constants/styleVariables';
+
+.input-field(@width) {
+  width: @width;
+  border: 1px solid @light-gray;
+  border-radius: 3px;
+  padding-left: 4px;
+  font-size: @font-size-input-basic;
+
+  &:focus,
+  &:active {
+    border-color: @color-accent;
+    outline: none;
+  }
+}
+
+.table-row {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+
+  padding: 2px 0px
+}
+
+.table-row--label-amount-cell {
+  width: @first-column-width;
+  margin-right: @column-distance;
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.table-row--label {
+  color: #ffffff;
+  border-radius: 2px;
+  padding: 1px 2px 1px 2px;
+  font-size: @font-size-basic;
+}
+
+.table-row--amount {
+  .input-field(85%)
+}
+
+.table-row-user--currency-amount {
+  width: @second-column-width;
+  margin-right: @column-distance;
+  font-size: @font-size-basic;
+  text-align: right;
+  padding-right: 20px;
+}
+
+.table-row--invest {
+  .input-field(@third-column-width);
+
+  &.hidden {
+    color: @hidden-color;
+
+    &:focus,
+    &:active {
+      border-color: @light-gray;
+      outline: none;
+    };
+  }
+}
