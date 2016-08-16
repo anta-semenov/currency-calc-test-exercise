@@ -1,4 +1,4 @@
-import trottle from 'lodash/trottle'
+import throttle from 'lodash/throttle'
 
 export const loadState = () => {
   try {
@@ -21,7 +21,7 @@ const saveStateInternal = (state) => {
   }
 }
 
-export const saveState = store => trottle(
+export const saveState = store => throttle(
   () => {saveStateInternal(store.getState())},
   1500
 )

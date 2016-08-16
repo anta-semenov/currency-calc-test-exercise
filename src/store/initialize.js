@@ -1,5 +1,5 @@
 import {loadState, saveState} from './localStorage'
-import * as actions from './actions/actionCreator'
+import * as actions from '../actions/actionCreator'
 import * as fromReducer from '../reducers'
 
 export const initializeState = (store) => {
@@ -18,7 +18,6 @@ export const initializeState = (store) => {
     startDate.setMilliseconds(0)
     startDate = startDate.getTime()
 
-    store.dispatch(actions.initStart())
     store.dispatch(actions.initTerms(startDate))
     store.dispatch(actions.changeUserCurrencyEnd('RUB'))
 
@@ -48,13 +47,9 @@ export const initializeState = (store) => {
     ))
 
     store.dispatch(actions.initFutureExchangeRates(
-      fromReducer.getFutureTerms(store.getState()),
+      fromReducer.getResultTerms(store.getState()),
       fromReducer.getCurrentRates(store.getState())
     ))
-
-    if (!fromReducer.getInitErrors(store.getState())) {
-      store.dispatch(actions.initSuccess())
-    }
   } else {
     store.dispatch(actions.setState(savedState))
   }

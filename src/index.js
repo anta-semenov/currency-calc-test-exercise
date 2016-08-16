@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Root from './components/root/Root'
 import configureStore from './store/configureStore'
-import initializeState from './store/initializeState'
+import {initializeState} from './store/initialize'
 
 const store = configureStore()
 initializeState(store)

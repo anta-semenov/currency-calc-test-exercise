@@ -8,7 +8,7 @@ const currencies = (state = {}, action) => {
     case actionTypes.CHANGE_CURRENCY_INVEST_RATE:
       return changeInvestRate(state, action)
     case actionTypes.ADD_CURRENCY:
-      return {...state, [action.currencyInfo.id]: action.currencyInfo}
+      return {...state, [action.currencyInfo.currencyId]: action.currencyInfo}
     case actionTypes.SET_STATE:
       return action.state.currencies || state
     default:
