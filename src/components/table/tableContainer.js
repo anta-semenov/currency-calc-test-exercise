@@ -1,7 +1,7 @@
 import * as fromReducer from '../../reducers'
-import Table from './table'
+import Table from './Table'
 import {connect} from 'react-redux'
-import * as actions from '../../actions.actionCreator'
+import * as actions from '../../actions/actionCreator'
 
 const mapStateToProps = state => ({
   currencies: fromReducer.getCurrenciesForTable(state),
