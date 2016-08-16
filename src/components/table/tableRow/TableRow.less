@@ -2,7 +2,7 @@
 
 .input-field(@width) {
   width: @width;
-  border: 1px solid @light-gray;
+  border: 1px solid @color-light-gray;
   border-radius: 3px;
   padding-left: 4px;
   font-size: @font-size-input-basic;
@@ -54,11 +54,11 @@
   .input-field(@third-column-width);
 
   &.hidden {
-    color: @hidden-color;
+    color: @color-hidden;
 
     &:focus,
     &:active {
-      border-color: @light-gray;
+      border-color: @color-light-gray;
       outline: none;
     };
   }

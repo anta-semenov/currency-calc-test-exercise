@@ -1,1 +1,35 @@
+@import '../../constants/styleVariables';
 
+.table-container {
+  max-width: 500px;
+}
+
+.table-header {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.header() {
+  text-align: center;
+  font-weight: @font-weight-bold;
+}
+
+.table-header--first-column {
+  width: @first-column-width;
+  margin-right: @column-distance;
+  .header;
+}
+
+.table-header--second-column {
+  width: @second-column-width;
+  margin-right: @column-distance;
+  .header;
+}
+
+.table-header--third-column {
+  width: @third-column-width;
+  .header;
+  &.hidden {
+    color: @color-hidden
+  }
+}
