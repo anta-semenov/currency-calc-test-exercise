@@ -18,11 +18,11 @@ const past = (state = {}, action) => {
 
 export default past
 
-export const changeUserCurrency = (state, {newUserCurrencyId, termsRatesRatio}) => mapValues(
+export const changeUserCurrency = (state, {newUserCurrency, termsRatesRatio}) => mapValues(
   state,
   value => {
     const newItem = {...value}
-    newItem.rate = newItem.currencyId === newUserCurrencyId ? 1 : round(termsRatesRatio[newItem.term]*newItem.rate, 4)
+    newItem.rate = newItem.currencyId === newUserCurrency.currencyId ? 1 : round(termsRatesRatio[newItem.term]*newItem.rate, 4)
     return newItem
   }
 )

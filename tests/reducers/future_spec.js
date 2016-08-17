@@ -203,7 +203,7 @@ describe('Future reducer', () => {
       }
     }
 
-    const action = changeUserCurrencyEnd('EUR', {
+    const action = changeUserCurrencyEnd({currencyId: 'EUR'}, {
       [new Date(2016,2,4).getTime()]: 1.0989,
       [new Date(2016,3,4).getTime()]: 1.2821
     })

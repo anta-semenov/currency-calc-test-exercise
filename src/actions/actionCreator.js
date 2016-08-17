@@ -73,9 +73,9 @@ export const addCurrency = (currency, baseCurrency, pastTerms, futureTerms, curr
 }
 
 //Change user currency
-export const changeUserCurrencyEnd = (newUserCurrencyId, termsRatesRatio) => ({type: actionTypes.CHANGE_USER_CURRENCY, newUserCurrencyId, termsRatesRatio})
-export const changeUserCurrency = (newUserCurrencyId, userCurrency, pastTerms, futureTerms, currentTerm) => dispatch => {
-  getPastExchangeRates(pastTerms, currentTerm, [userCurrency], newUserCurrencyId).then(
+export const changeUserCurrencyEnd = (newUserCurrency, termsRatesRatio) => ({type: actionTypes.CHANGE_USER_CURRENCY, newUserCurrency, termsRatesRatio})
+export const changeUserCurrency = (newUserCurrency, userCurrency, pastTerms, futureTerms, currentTerm) => dispatch => {
+  getPastExchangeRates(pastTerms, currentTerm, [userCurrency], newUserCurrency.currencyId).then(
     response => {
       dispatch(recieveRates())
       const termsRatesRatio = {}
@@ -87,7 +87,7 @@ export const changeUserCurrency = (newUserCurrencyId, userCurrency, pastTerms, f
           })
         }
       })
-      dispatch(changeUserCurrencyEnd(newUserCurrencyId, termsRatesRatio))
+      dispatch(changeUserCurrencyEnd(newUserCurrency, termsRatesRatio))
     },
     error => {
       dispatch(error)

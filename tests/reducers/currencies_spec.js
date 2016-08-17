@@ -36,20 +36,20 @@ describe('currencies', () => {
 
   it('Should add currency', () => {
     const initialState = {
-      EUR: {id: 'EUR', investRate: 5.5},
-      USD: {id: 'USD', investRate: 5.5}
+      EUR: {currencyId: 'EUR', investRate: 5.5},
+      USD: {currencyId: 'USD', investRate: 5.5}
     }
 
     const action = actions.addCurrencyResult({
-      id: 'GBP',
+      currencyId: 'GBP',
       initialAmount: 3000,
       investRate: 4.0
     })
 
     const nextState = {
-      EUR: {id: 'EUR', investRate: 5.5},
-      USD: {id: 'USD', investRate: 5.5},
-      GBP: {id: 'GBP', initialAmount: 3000, investRate: 4.0}
+      EUR: {currencyId: 'EUR', investRate: 5.5},
+      USD: {currencyId: 'USD', investRate: 5.5},
+      GBP: {currencyId: 'GBP', initialAmount: 3000, investRate: 4.0}
     }
 
     expect(reducer(initialState, action)).to.deep.equal(nextState)
