@@ -2,14 +2,15 @@ import React from 'react'
 import './TableRow.less'
 import classnames from 'classnames'
 
-const numberInput = (e, action) => {
-  const numberString = e.target.value.replace(/( )/g, '')
-  if (!/\D/.test(numberString)) {
+const numberInput = (e, action, decimal) => {
+  const numberString = e.target.value.replace(/( )/g, '').replace(',','.')
+  const regExpString = '[^0-9' + (decimal ? '\.,' : '') + ']'
+  if (!new RegExp(regExpString).test(numberString)) {
     action(numberString)
   }
 }
 
-const formatNumber = number => number.toString(10).replace(/(\d)(?=(?:\d{3})+$|\.)/g, '$1 ')
+const formatNumber = number => number.toString(10).replace(/(\d)(?=(?:\d{3})+($|\.))/g, '$1 ')
 
 const TableRow = (props) => {
   const investStyle = classnames({
@@ -33,7 +34,7 @@ const TableRow = (props) => {
         disabled={!props.useInvest}
         placeholder='0'
         value={props.investRate === 0 && props.useInvest ? undefined : props.investRate}
-        onChange={(e) => numberInput(e, props.changeInvestRate)}
+        onChange={(e) => numberInput(e, props.changeInvestRate, true)}
       />
     </div>
   )
