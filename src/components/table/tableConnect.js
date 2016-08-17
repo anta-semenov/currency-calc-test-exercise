@@ -15,13 +15,13 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  addCurrency: (currency, userCurrency, pastTerms, futureTerms, currentTerm) => dispatch(actions.addCurrency(
+  addCurrency: (currency, userCurrency, pastTerms, futureTerms, currentTerm) => {dispatch(actions.addCurrency(
     currency,
     userCurrency,
     pastTerms,
     futureTerms,
     currentTerm
-  )),
+  ))},
   changeAmount: (currencyId, newAmount) => dispatch(actions.changeCurrencyAmount(currencyId, newAmount)),
   changeInvestRate: (currencyId, newInvestRate) => dispatch(actions.changeInvestRate(currencyId, newInvestRate))
 })
@@ -31,7 +31,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
   currencies: stateProps.currencies,
   currenciesForAdding: stateProps.currenciesForAdding,
   useInvest: stateProps.useInvest,
-  
+
   changeAmount: dispatchProps.changeAmount,
   changeInvestRate: dispatchProps.changeInvestRate,
   addCurrency: currency => dispatchProps.addCurrency(

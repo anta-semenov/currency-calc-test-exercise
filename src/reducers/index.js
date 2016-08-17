@@ -61,14 +61,14 @@ export const availableCurrencies = [
   {currencyId: 'USD', label: '$', color: '#0d7c22'},
   {currencyId: 'EUR', label: '€', color: '#FE9927'},
   {currencyId: 'JPY', label: '¥', color: '#ec1919'},
-  {currencyId: 'CHF', label: 'CHF', color: '#37e0e0'},
+  {currencyId: 'CHF', label: 'CHF', color: '#70adad'},
   {currencyId: 'GBP', label: '£', color: '#8c37e0'},
   {currencyId: 'ILS', label: '₪', color: '#b36526'},
-  {currencyId: 'CNY', label: 'CNY', color: '#ec510e'}
+  {currencyId: 'CNY', label: 'CNY', color: '#4478a3'}
 ]
 export const getCurrenciesForAdding = createSelector(
   getCurrenciesIds,
-  currenciesInUse => availableCurrencies.filter(item => !(item.id in currenciesInUse))
+  currenciesInUse => availableCurrencies.filter(item => currenciesInUse.indexOf(item.currencyId) === -1)
 )
 export const getCurrenciesForTable = createSelector(
   state => state.currencies,

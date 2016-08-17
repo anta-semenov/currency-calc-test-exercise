@@ -1,6 +1,6 @@
 import React from 'react'
 import TableRow from './tableRow/TableRow'
-import AddCurrencyButton from './addCurrencyButton/AddCurrencyButton'
+import AddCurrencyMenu from './addCurrencyButton/AddCurrencyMenu'
 import classnames from 'classnames'
 import './Table.less'
 
@@ -27,7 +27,7 @@ const Table = ({currencies, changeAmount, changeInvestRate, useInvest, ...rest})
           />
         )}
       </div>
-      <AddCurrencyButton {...rest} />
+      {rest.currenciesForAdding.length > 0 ? <AddCurrencyMenu {...rest} /> : null}
     </div>
   )
 }

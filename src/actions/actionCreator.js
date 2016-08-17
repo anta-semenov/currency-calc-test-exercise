@@ -59,7 +59,7 @@ export const addCurrency = (currency, baseCurrency, pastTerms, futureTerms, curr
     response => {
       dispatch(recieveRates())
       const currentRates = {
-        [response[''+currentTerm+currency.currencyId].currencyId]: {rate: response[''+currentTerm+currency.currencyId].rate}
+        [response[''+currentTerm+currency.currencyId].currencyId]: response[''+currentTerm+currency.currencyId].rate
       }
       dispatch(addCurrencyResult(
         currencyInfo,

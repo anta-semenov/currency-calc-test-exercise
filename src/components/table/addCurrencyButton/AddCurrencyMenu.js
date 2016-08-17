@@ -1,0 +1,23 @@
+import React from 'react'
+import './AddCurrencyButton.less'
+import AppearingMenu from '../../appearingMenu/AppearingMenu'
+import AddCurrencyButton from './AddCurrencyButton'
+
+const AddCurrencyMenu = ({currenciesForAdding, addCurrency}) => {
+  const items = currenciesForAdding.map(item => (
+    <AddCurrencyButton {...item} addCurrency={addCurrency} key={item.currencyInfo}/>
+  ))
+  const labelComponent = <div className='add-currency-label' />
+  return(
+    <div className='add-currency-menu'>
+      <AppearingMenu labelComponent={labelComponent} menuItems={items}/>
+    </div>
+  )
+}
+
+AddCurrencyMenu.propTypes = {
+  currenciesForAdding: React.PropTypes.array.isRequired,
+  addCurrency: React.PropTypes.func.isRequired
+}
+
+export default AddCurrencyMenu
