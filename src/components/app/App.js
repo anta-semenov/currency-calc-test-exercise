@@ -1,5 +1,5 @@
 import React from 'react'
-import Table from '../table/tableContainer'
+import Table from '../table/tableConnect'
 import Header from '../header/headerConnect'
 
 const App = () => (
