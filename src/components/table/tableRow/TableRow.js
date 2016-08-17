@@ -3,11 +3,13 @@ import './TableRow.less'
 import classnames from 'classnames'
 
 const numberInput = (e, action) => {
-  const input = new Number(e.target.value)
-  if (input && !isNaN(input)) {
-    action(e.target.value)
+  const numberString = e.target.value.replace(/( )/g, '')
+  if (!/\D/.test(numberString)) {
+    action(numberString)
   }
 }
+
+const formatNumber = number => number.toString(10).replace(/(\d)(?=(?:\d{3})+$|\.)/g, '$1 ')
 
 const TableRow = (props) => {
   const investStyle = classnames({
@@ -21,11 +23,11 @@ const TableRow = (props) => {
         <input
           className='table-row--amount'
           placeholder='0'
-          value={props.initialAmount === 0 ? undefined : props.initialAmount}
+          value={props.initialAmount === 0 ? undefined : formatNumber(props.initialAmount)}
           onChange={(e) => numberInput(e, props.changeAmount)}
         />
       </div>
-      <div className='table-row-user--currency-amount'>{props.amountInUserCurrency.toLocaleString()}</div>
+      <div className='table-row-user--currency-amount'>{formatNumber(props.amountInUserCurrency)}</div>
       <input
         className={investStyle}
         disabled={!props.useInvest}
