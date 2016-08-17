@@ -23,6 +23,8 @@ export default class AppearingMenu extends React.Component {
         this._menuItemsNode.style.opacity = '0'
       }
 
+      this.setState({prevMainSize: undefined})
+
       requestAnimationFrame(() => {
         this._menuBodyNode.style.transform = ''
         this._menuBodyNode.style.transition = 'transform 0.5s'
