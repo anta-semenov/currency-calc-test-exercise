@@ -37,14 +37,6 @@ export const initTerms = startDate => dispatch => {
   ]}))
 }
 
-//Initialize past exchange rates
-export const initPastExchangeRates = (pastTerms, currentTerm, currencies, baseCurrency) => dispatch => {
-  getPastExchangeRates(pastTerms, currentTerm, currencies, baseCurrency).then(
-    response => {dispatch(setState({exchangeRates: {past: response}}))},
-    error => {dispatch(errorRates(error))}
-  )
-}
-
 //Initialize future exchange rates
 //We can have future rates from load state, so when we have it we need just change terms
 export const initFutureExchangeRates = (futureTerms, currentRates) => dispatch => {

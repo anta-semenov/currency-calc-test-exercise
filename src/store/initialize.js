@@ -1,6 +1,7 @@
 import {loadState, saveState} from './localStorage'
 import * as actions from '../actions/actionCreator'
 import * as fromReducer from '../reducers'
+import {getPastExchangeRates} from '../helpers/exchangeRatesApi'
 
 export const initializeState = (store) => {
   store.subscribe(saveState(store))
@@ -39,17 +40,21 @@ export const initializeState = (store) => {
       investRate: 0
     }, {}, {}))
 
-    store.dispatch(actions.initPastExchangeRates(
+    getPastExchangeRates(
       fromReducer.getPastTerms(store.getState()),
       fromReducer.getCurrentTerm(store.getState()),
       fromReducer.getCurrenciesIds(store.getState()),
       fromReducer.getUserCurrency(store.getState())
-    ))
-
-    store.dispatch(actions.initFutureExchangeRates(
-      fromReducer.getResultTerms(store.getState()),
-      fromReducer.getCurrentRates(store.getState())
-    ))
+    ).then(
+      response => {
+        store.dispatch(actions.setState({exchangeRates: {past: response}}))
+        store.dispatch(actions.initFutureExchangeRates(
+          fromReducer.getResultTerms(store.getState()),
+          fromReducer.getCurrentRates(store.getState())
+        ))
+      },
+      error => {store.dispatch(actions.errorRates(error))}
+    )
   } else {
     store.dispatch(actions.setState(savedState))
   }
