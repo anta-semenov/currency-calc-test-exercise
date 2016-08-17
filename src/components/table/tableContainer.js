@@ -6,6 +6,7 @@ import * as actions from '../../actions/actionCreator'
 const mapStateToProps = state => ({
   currencies: fromReducer.getCurrenciesForTable(state),
   currenciesForAdding: fromReducer.getCurrenciesForAdding(state),
+  useInvest: fromReducer.getUseInvest(state),
 
   pastTerms: fromReducer.getPastTerms(state),
   futureTerms: fromReducer.getResultTerms(state),
@@ -29,6 +30,8 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
   ...ownProps,
   currencies: stateProps.currencies,
   currenciesForAdding: stateProps.currenciesForAdding,
+  useInvest: stateProps.useInvest,
+  
   changeAmount: dispatchProps.changeAmount,
   changeInvestRate: dispatchProps.changeInvestRate,
   addCurrency: currency => dispatchProps.addCurrency(

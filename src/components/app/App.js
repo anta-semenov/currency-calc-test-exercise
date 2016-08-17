@@ -1,9 +1,13 @@
 import React from 'react'
 import Table from '../table/tableContainer'
+import Header from '../header/headerConnect'
 
 const App = () => (
   <div className='app'>
-    <Table />
+    <Header />
+    <div className='app-content'>
+      <Table />
+    </div>
   </div>
 )
 

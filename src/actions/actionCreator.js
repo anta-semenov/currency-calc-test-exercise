@@ -18,6 +18,8 @@ export const requestRates = () => ({type: actionTypes.REQUEST_RATES})
 export const recieveRates = () => ({type: actionTypes.RECIEVE_RATES})
 export const errorRates = (error) => ({type: actionTypes.ERROR_RATES, error})
 
+export const changeUseInvest = () => ({type: actionTypes.CHANGE_USE_INVEST})
+
 //Initialize terms, calc invest rate multiplicators
 export const initTerms = startDate => dispatch => {
   const pastTerms = getTerms(startDate, false, true).map(item => ({term: item}))
@@ -75,7 +77,7 @@ export const addCurrency = (currency, baseCurrency, pastTerms, futureTerms, curr
 //Change user currency
 export const changeUserCurrencyEnd = (newUserCurrency, termsRatesRatio) => ({type: actionTypes.CHANGE_USER_CURRENCY, newUserCurrency, termsRatesRatio})
 export const changeUserCurrency = (newUserCurrency, userCurrency, pastTerms, futureTerms, currentTerm) => dispatch => {
-  getPastExchangeRates(pastTerms, currentTerm, [userCurrency], newUserCurrency.currencyId).then(
+  getPastExchangeRates(pastTerms, currentTerm, [userCurrency.currencyId], newUserCurrency.currencyId).then(
     response => {
       dispatch(recieveRates())
       const termsRatesRatio = {}
