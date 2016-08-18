@@ -1,7 +1,6 @@
 @import '../../../constants/styleVariables';
 
-.input-field(@width) {
-  width: @width;
+.input-field() {
   border: 1px solid @color-light-gray;
   border-radius: 3px;
   padding-left: 4px;
@@ -30,20 +29,23 @@
 
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
   align-items: center;
 }
 .table-row--label {
   color: #ffffff;
   border-radius: 2px;
-  padding: 1px 2px 1px 2px;
+  padding: 0px 2px 0px 2px;
   font-size: @font-size-basic;
   text-align: center;
   width: 30px;
+  margin-right: 5px;
+  flex-shrink: 0;
 }
 
 .table-row--amount {
-  .input-field(75%)
+  .input-field();
+  flex-shrink: 1;
+  min-width: 50px;
 }
 
 .table-row-user--currency-amount {
@@ -55,7 +57,8 @@
 }
 
 .table-row--invest {
-  .input-field(@third-column-width);
+  .input-field();
+  width: @third-column-width;
 
   &.hidden {
     color: @color-hidden;

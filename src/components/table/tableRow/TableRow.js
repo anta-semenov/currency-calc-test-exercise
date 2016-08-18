@@ -33,7 +33,7 @@ const TableRow = (props) => {
         className={investStyle}
         disabled={!props.useInvest}
         placeholder='0'
-        value={props.investRate === 0 && props.useInvest ? undefined : props.investRate}
+        value={props.investRate === 0 && props.useInvest ? '' : props.investRate}
         onChange={(e) => numberInput(e, props.changeInvestRate, true)}
       />
     </div>
