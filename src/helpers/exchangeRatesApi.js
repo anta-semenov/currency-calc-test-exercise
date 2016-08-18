@@ -22,11 +22,11 @@ const getExchangeRate = (date, currencies, baseCurrency = 'USD') => new Promise(
     if (request.readyState === XMLHttpRequest.DONE) {
       if (request.status === 200) {
         const response = JSON.parse(request.responseText)['rates']
-        const result = Object.keys(response).map((key) => {
+        const result = currencies.map((key) => {
           return {
             currency: key,
             term: date instanceof Date ? date.getTime() : date,
-            rate: round(1/response[key],4)
+            rate: round(1/(response[key] || 1),4)
           }
         })
         resolve(result)
@@ -40,8 +40,6 @@ const getExchangeRate = (date, currencies, baseCurrency = 'USD') => new Promise(
 })
 
 export const getPastExchangeRates = (pastTerms, currentTerm, currencies, baseCurrency) => {
-  console.log(currencies);
-  console.log(baseCurrency);
   const pastRequest = pastTerms.map(term =>
     getExchangeRate(term, currencies, baseCurrency)
   )
@@ -61,7 +59,6 @@ export const getPastExchangeRates = (pastTerms, currentTerm, currencies, baseCur
           }
         })
       })
-      console.log(response);
       return past
     },
     error => {

@@ -20,7 +20,7 @@ export const initializeState = (store) => {
     startDate = startDate.getTime()
 
     store.dispatch(actions.initTerms(startDate))
-    store.dispatch(actions.changeUserCurrencyEnd('RUB'))
+    store.dispatch(actions.changeUserCurrencyEnd({currencyId: 'RUB', label: '₽'}))
 
     //add first three cyrrencies it can be changed for more intelect way latter
     const currenciesForAdd = fromReducer.getCurrenciesForAdding(store.getState())
@@ -44,7 +44,7 @@ export const initializeState = (store) => {
       fromReducer.getPastTerms(store.getState()),
       fromReducer.getCurrentTerm(store.getState()),
       fromReducer.getCurrenciesIds(store.getState()),
-      fromReducer.getUserCurrency(store.getState())
+      fromReducer.getUserCurrency(store.getState()).currencyId
     ).then(
       response => {
         store.dispatch(actions.setState({exchangeRates: {past: response}}))
