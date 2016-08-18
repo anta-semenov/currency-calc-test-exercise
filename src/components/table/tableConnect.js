@@ -23,7 +23,8 @@ const mapDispatchToProps = dispatch => ({
     currentTerm
   ))},
   changeAmount: (currencyId, newAmount) => dispatch(actions.changeCurrencyAmount(currencyId, newAmount)),
-  changeInvestRate: (currencyId, newInvestRate) => dispatch(actions.changeInvestRate(currencyId, newInvestRate))
+  changeInvestRate: (currencyId, newInvestRate) => dispatch(actions.changeInvestRate(currencyId, newInvestRate)),
+  removeCurrency: currencyId => dispatch(actions.removeCurrency(currencyId))
 })
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
@@ -40,7 +41,8 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
     stateProps.pastTerms,
     stateProps.futureTerms,
     stateProps.currentTerm
-  )
+  ),
+  removeCurrency: dispatchProps.removeCurrency
 })
 
 export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Table)

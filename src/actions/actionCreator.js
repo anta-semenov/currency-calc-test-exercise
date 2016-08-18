@@ -18,6 +18,8 @@ export const requestRates = () => ({type: actionTypes.REQUEST_RATES})
 export const recieveRates = () => ({type: actionTypes.RECIEVE_RATES})
 export const errorRates = (error) => ({type: actionTypes.ERROR_RATES, error})
 
+export const removeCurrency = currencyId => ({type: actionTypes.REMOVE_CURRENCY, currencyId})
+
 export const changeUseInvest = () => ({type: actionTypes.CHANGE_USE_INVEST})
 
 //Initialize terms, calc invest rate multiplicators

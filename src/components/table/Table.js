@@ -4,7 +4,7 @@ import AddCurrencyMenu from './addCurrencyButton/AddCurrencyMenu'
 import classnames from 'classnames'
 import './Table.less'
 
-const Table = ({currencies, changeAmount, changeInvestRate, useInvest, ...rest}) => {
+const Table = ({currencies, changeAmount, changeInvestRate, useInvest, removeCurrency, ...rest}) => {
   const investStyle = classnames({
     'table-header--third-column': true,
     hidden: !useInvest
@@ -23,6 +23,7 @@ const Table = ({currencies, changeAmount, changeInvestRate, useInvest, ...rest})
             changeAmount={newAmount => changeAmount(item.currencyId, newAmount)}
             changeInvestRate={newInvestRate => changeInvestRate(item.currencyId, newInvestRate)}
             useInvest={useInvest}
+            removeCurrency={() => removeCurrency(item.currencyId)}
             {...item}
           />
         )}
@@ -39,7 +40,8 @@ Table.propTypes = {
 
   changeAmount: React.PropTypes.func.isRequired,
   changeInvestRate: React.PropTypes.func.isRequired,
-  addCurrency: React.PropTypes.func.isRequired
+  addCurrency: React.PropTypes.func.isRequired,
+  removeCurrency: React.PropTypes.func.isRequired
 }
 
 export default Table

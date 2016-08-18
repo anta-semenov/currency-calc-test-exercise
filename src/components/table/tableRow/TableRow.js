@@ -20,7 +20,7 @@ const TableRow = (props) => {
   return(
     <div className='table-row'>
       <div className='table-row--label-amount-cell'>
-        <div className='table-row--label' style={{backgroundColor: props.color}}>{props.label}</div>
+        <div className='table-row--label' style={{backgroundColor: props.color}} onClick={props.removeCurrency}>{props.label}</div>
         <input
           className='table-row--amount'
           placeholder='0'

@@ -1,5 +1,6 @@
 import * as actionTypes from '../../constants/actionTypes'
 import {changeUserCurrency} from './past'
+import omitBy from 'lodash/omitBy'
 
 const future = (state = {}, action) => {
   switch (action.type) {
@@ -11,6 +12,8 @@ const future = (state = {}, action) => {
         return changeUserCurrency(state, action)
     case actionTypes.ADD_CURRENCY:
       return {...state, ...action.futureExchangeRates}
+    case actionTypes.REMOVE_CURRENCY:
+      return omitBy(state, value => value.currencyId === action.currencyId)
     default:
       return state
   }

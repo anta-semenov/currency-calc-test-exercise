@@ -40,6 +40,33 @@
   width: 30px;
   margin-right: 5px;
   flex-shrink: 0;
+  cursor: pointer;
+
+  transition: color 300ms 100ms;
+
+  &:hover {
+    color: transparent;
+    transition: color 300ms;
+    &:before {
+      opacity: 1;
+      transition: opacity 300ms 100ms;
+    };
+  };
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 1;
+    background-image: url('data:image/svg+xml, <svg viewBox="-10 -15 60 60" xmlns="http://www.w3.org/2000/svg"><path fill="#ffffff" stroke="#ffffff" d="M0 12h32v8h-32z" /></svg>');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 30px;
+    height: @font-size-basic + 3;
+    opacity: 0;
+    transition: opacity 300ms;
+  }
 }
 
 .table-row--amount {

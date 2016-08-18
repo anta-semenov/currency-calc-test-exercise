@@ -1,5 +1,6 @@
 import * as actionTypes from '../constants/actionTypes'
 import {createSelector} from 'reselect'
+import omit from 'lodash/omit'
 
 const currencies = (state = {}, action) => {
   switch (action.type) {
@@ -11,6 +12,8 @@ const currencies = (state = {}, action) => {
       return {...state, [action.currencyInfo.currencyId]: action.currencyInfo}
     case actionTypes.SET_STATE:
       return action.state.currencies || state
+    case actionTypes.REMOVE_CURRENCY:
+      return omit(state, action.currencyId)
     default:
       return state
   }
@@ -32,7 +35,8 @@ const changeInvestRate = (state, {currencyId, newInvestRate}) => {
 
 export const getCurrenciesIds = state => Object.keys(state)
 export const getCurrencies = state => state
-export const getUserCurrency = createSelector(
+
+export const getCollors = createSelector(
   state => state,
-  currencies => Object.keys(currencies).find(key => currencies[key].isUserCurrency)
+  currencies => Object.keys(currencies).map(key => currencies[key].color)
 )

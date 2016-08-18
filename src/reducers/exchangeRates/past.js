@@ -2,6 +2,7 @@ import * as actionTypes from '../../constants/actionTypes'
 import {createSelector} from 'reselect'
 import round from 'lodash/round'
 import mapValues from 'lodash/mapValues'
+import omitBy from 'lodash/omitBy'
 
 const past = (state = {}, action) => {
   switch (action.type) {
@@ -11,6 +12,8 @@ const past = (state = {}, action) => {
       return {...state, ...action.pastExchangeRates}
     case actionTypes.CHANGE_USER_CURRENCY:
       return changeUserCurrency(state, action)
+    case actionTypes.REMOVE_CURRENCY:
+      return omitBy(state, value => value.currencyId === action.currencyId)
     default:
       return state
   }
