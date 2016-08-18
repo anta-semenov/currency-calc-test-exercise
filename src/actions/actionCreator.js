@@ -47,7 +47,7 @@ export const initFutureExchangeRates = (futureTerms, currentRates) => dispatch =
 export const addCurrencyResult = (currencyInfo, pastExchangeRates, futureExchangeRates) => ({type: actionTypes.ADD_CURRENCY, currencyInfo, pastExchangeRates, futureExchangeRates})
 export const addCurrency = (currency, baseCurrency, pastTerms, futureTerms, currentTerm) => dispatch => {
   const currencyInfo = {...currency, initialAmount: 0, investRate:0}
-  getPastExchangeRates(pastTerms, currentTerm, [currency.currencyId], baseCurrency).then(
+  getPastExchangeRates(pastTerms, currentTerm, [currency.currencyId], baseCurrency.currencyId).then(
     response => {
       dispatch(recieveRates())
       const currentRates = {
