@@ -5,7 +5,7 @@ import AddCurrencyButton from './AddCurrencyButton'
 
 const AddCurrencyMenu = ({currenciesForAdding, addCurrency}) => {
   const items = currenciesForAdding.map(item => (
-    <AddCurrencyButton {...item} addCurrency={addCurrency} key={item.currencyInfo}/>
+    <AddCurrencyButton {...item} addCurrency={addCurrency} key={item.currencyId}/>
   ))
   const labelComponent = <div className='add-currency-label' />
   return(
