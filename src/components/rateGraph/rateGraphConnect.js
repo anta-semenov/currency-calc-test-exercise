@@ -7,6 +7,8 @@ import mapValues from 'lodash/mapValues'
 import values from 'lodash/values'
 import maxBy from 'lodash/maxBy'
 import minBy from 'lodash/minBy'
+import ceil from 'lodash/ceil'
+import floor from 'lodash/floor'
 
 const ratesToDataForGraph = (rates, result) => {
   Object.keys(rates).forEach(key => {
@@ -59,9 +61,16 @@ const minMaxRates = createSelector(
   fromReducer.getUserCurrency,
   (exchangeRates, {currencyId: userCurrencyId}) => {
     const ratesArray = values(exchangeRates).filter(item => item.currencyId !== userCurrencyId)
+    let minRate = (minBy(ratesArray, value => value.rate) || {rate: 0}).rate*0.9
+    minRate = floor(minRate, -(minRate.toFixed(0).length-1))
+    let maxRate = (maxBy(ratesArray, value => value.rate) || {rate: 0}).rate*1.2
+    maxRate = ceil(maxRate, -(maxRate.toFixed(0).length-2))
+    const difference = ceil((maxRate-minRate)/5, -(((maxRate-minRate)/5).toFixed(0).length-2))
+    maxRate = minRate + difference*5
+
     return({
-      minRate: minBy(ratesArray, value => value.rate),
-      maxRate: maxBy(ratesArray, value => value.rate)
+      minRate: minRate,
+      maxRate: maxRate
     })
   }
 )
@@ -74,17 +83,15 @@ const minMaxTerms = createSelector(
   })
 )
 
-const mapStateToProps = state => {
-  return({
-    pastRates: pastRatesSelector(state),
-    futureRates: futureRatesSelector(state),
-    colors: fromReducer.getCurrenciesColors(state),
-    minTerm: minMaxTerms(state).minTerm.term,
-    maxTerm: minMaxTerms(state).maxTerm.term,
-    minRate: minMaxRates(state).minRate.rate,
-    maxRate: minMaxRates(state).maxRate.rate,
-  })
-}
+const mapStateToProps = state => ({
+  pastRates: pastRatesSelector(state),
+  futureRates: futureRatesSelector(state),
+  colors: fromReducer.getCurrenciesColors(state),
+  minTerm: minMaxTerms(state).minTerm.term,
+  maxTerm: minMaxTerms(state).maxTerm.term,
+  minRate: minMaxRates(state).minRate,
+  maxRate: minMaxRates(state).maxRate,
+})
 
 const mapDispatchToProps = dispatch => ({
   changeRate: (...args) => dispatch(changeExchangeRate(...args))

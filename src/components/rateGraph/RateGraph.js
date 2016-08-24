@@ -6,12 +6,10 @@ import * as d3 from 'd3'
 const height = 200
 const width = 250
 
-const getScales = props => {
-  return({
-    scaleY: d3.scaleLinear().domain([props.minRate, props.maxRate]).range([height-30, 30]),
-    scaleX: d3.scaleLinear().domain([props.minTerm, props.maxTerm]).range([0, width-30])
-  })
-}
+const getScales = props => ({
+  scaleY: d3.scaleLinear().domain([props.minRate, props.maxRate]).range([height-30, 30]),
+  scaleX: d3.scaleLinear().domain([props.minTerm, props.maxTerm]).range([0, width-30])
+})
 
 const drawCurrencyCircles = (svg, futureRates, scaleX, scaleY, currencyId, changeRateAction, color) => {
   const circles = d3.select(svg).selectAll(`.rate-circle-${currencyId}`).data(futureRates, d => d.term)
@@ -41,6 +39,7 @@ class RateGraph extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState(getScales(nextProps))
+    this.setState({prevCurrencies: Object.keys(this.props.futureRates)})
   }
 
   componentDidUpdate() {
@@ -61,6 +60,16 @@ class RateGraph extends React.Component {
         colors[currencyId]
       )
     })
+
+    //also delete circles for currencies that were left
+    if (this.state.prevCurrencies) {
+      this.state.prevCurrencies.forEach(currencyId => {
+        if (!(currencyId in futureRates)) {
+          //this means that this currency Id no longer use, so we need to delete it circles
+          d3.select(this._svg).selectAll(`.rate-circle-${currencyId}`).remove()
+        }
+      })
+    }
   }
 
   render() {
