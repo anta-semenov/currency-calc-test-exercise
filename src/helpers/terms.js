@@ -4,7 +4,7 @@ export const defaultFuture = {
 }
 
 export const defaultPast = {
-  count: 24,
+  count: 12,
   monthInterval: 1
 }
 
