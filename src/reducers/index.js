@@ -55,9 +55,13 @@ export const getUseInvest = state => state.useInvest || false
 export const getResultTerms = state => fromTerms.getTermsForFuture(state.terms)
 export const getPastTerms = state => fromTerms.getPastTerms(state.terms)
 export const getCurrentTerm = state => fromTerms.getCurrentTerm(state.terms)
+export const getTerms = state => state.terms
 
 //Exchange rates
 export const getCurrentRates = state => fromExchangeRates.getInitialRates(state.exchangeRates)
+export const getFutureExchangeRates = state => fromExchangeRates.getFutureExchangeRates(state.exchangeRates)
+export const getPastExchangeRates = state => fromExchangeRates.getPastExchangeRates(state.exchangeRates)
+export const getAllExchangeRates = state => fromExchangeRates.getAllExchangeRates(state.exchangeRates)
 
 //Currencies
 export const getCurrenciesIds = state => fromCurrencies.getCurrenciesIds(state.currencies)

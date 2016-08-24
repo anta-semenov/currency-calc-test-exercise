@@ -1,6 +1,7 @@
 import * as actionTypes from '../constants/actionTypes'
 import {createSelector} from 'reselect'
 import omit from 'lodash/omit'
+import mapValues from 'lodash/mapValues'
 
 const currencies = (state = {}, action) => {
   switch (action.type) {
@@ -38,5 +39,5 @@ export const getCurrencies = state => state
 
 export const getCollors = createSelector(
   state => state,
-  currencies => Object.keys(currencies).map(key => currencies[key].color)
+  currencies => mapValues(currencies, value => value.color)
 )

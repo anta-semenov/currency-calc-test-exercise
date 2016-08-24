@@ -9,18 +9,6 @@ describe('Terms initialization', () => {
     const action = actions.initTerms(startDate)
 
     const expectedTerms = [
-      {term: new Date(2014,3,4).getTime()},
-      {term: new Date(2014,4,4).getTime()},
-      {term: new Date(2014,5,4).getTime()},
-      {term: new Date(2014,6,4).getTime()},
-      {term: new Date(2014,7,4).getTime()},
-      {term: new Date(2014,8,4).getTime()},
-      {term: new Date(2014,9,4).getTime()},
-      {term: new Date(2014,10,4).getTime()},
-      {term: new Date(2014,11,4).getTime()},
-      {term: new Date(2014,12,4).getTime()},
-      {term: new Date(2015,1,4).getTime()},
-      {term: new Date(2015,2,4).getTime()},
       {term: new Date(2015,3,4).getTime()},
       {term: new Date(2015,4,4).getTime()},
       {term: new Date(2015,5,4).getTime()},

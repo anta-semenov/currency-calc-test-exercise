@@ -14,7 +14,7 @@ export default reducer
 */
 
 export const getPastExchangeRates = state => state.past
-export const getFutureExchangeRates = state => state.futurre
+export const getFutureExchangeRates = state => state.future
 export const getAllExchangeRates = state => ({...state.past, ...state.future})
 
 export const getInitialRates = state => fromPast.getInitialRates(state.past)
