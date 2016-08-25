@@ -49,7 +49,7 @@ export const initializeState = (store) => {
       response => {
         store.dispatch(actions.setState({exchangeRates: {past: response}}))
         store.dispatch(actions.initFutureExchangeRates(
-          fromReducer.getResultTerms(store.getState()),
+          fromReducer.getFutureTermsArray(store.getState()),
           fromReducer.getCurrentRates(store.getState()),
           fromReducer.getUserCurrency(store.getState())
         ))
@@ -57,7 +57,6 @@ export const initializeState = (store) => {
       error => {store.dispatch(actions.errorRates(error))}
     )
   } else {
-    console.log(savedState);
     store.dispatch(actions.setState(savedState))
   }
 }

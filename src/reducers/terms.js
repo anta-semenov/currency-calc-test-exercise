@@ -12,12 +12,12 @@ const terms = (state = [], action) => {
 
 export default terms
 
-export const getTermsForFuture = createSelector(
+export const getArrayOfFutureTerms = createSelector(
   state => state,
   state => state.filter(item => item.investRateMultiplicator !== undefined).map(item => item.term)
 )
 
-export const getTermsForResults = createSelector(
+export const getFutureTerms = createSelector(
   state => state,
   state => state.filter(item => item.investRateMultiplicator !== undefined)
 )

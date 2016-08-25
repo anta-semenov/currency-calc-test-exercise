@@ -22,39 +22,14 @@ export default reducer
 /*
 * Selectors
 */
-
-//Index selectors
-export const getD3ResultGraphStackInput = state => {
-  const temp = {}
-  const currenciesIds = getCurrenciesIds(state)
-  let maxValue = 0
-  fromTerms.getTermsForResults(state.terms).forEach(termItem => {
-    const {term, investRateMultiplicator} = termItem
-    let sumValue = 0
-    currenciesIds.forEach(currencyId => {
-      if (!temp[term]) {
-        temp[term] = {term}
-      }
-      const {initialAmount, investRate} = state.currencies[currencyId]
-      const value = initialAmount*(getUseInvest(state) ? 1+(investRateMultiplicator*investRate)/100 : 1)*fromExchangeRates.getAllExchangeRates(state.exchangeRates)[''+term+currencyId].rate
-      temp[term][currencyId] = value
-      sumValue += value
-    })
-    maxValue = Math.max(maxValue, sumValue)
-  })
-
-  const result = []
-  Object.keys(temp).forEach(key => result.push(temp[key]))
-  return {maxValue, result}
-}
-
 //Use invest
 export const getUseInvest = state => state.useInvest || false
 
 //Terms
-export const getResultTerms = state => fromTerms.getTermsForFuture(state.terms)
+export const getFutureTermsArray = state => fromTerms.getArrayOfFutureTerms(state.terms)
 export const getPastTerms = state => fromTerms.getPastTerms(state.terms)
 export const getCurrentTerm = state => fromTerms.getCurrentTerm(state.terms)
+export const getFutureTerms = state => fromTerms.getFutureTerms(state.terms)
 export const getTerms = state => state.terms
 
 //Exchange rates

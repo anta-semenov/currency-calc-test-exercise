@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
   availableCurrencies: fromReducer.availableCurrencies,
 
   pastTerms: fromReducer.getPastTerms(state),
-  futureTerms: fromReducer.getResultTerms(state),
+  futureTerms: fromReducer.getFutureTermsArray(state),
   currentTerm: fromReducer.getCurrentTerm(state),
   allExchangeRates: fromReducer.getAllExchangeRates(state)
 })
