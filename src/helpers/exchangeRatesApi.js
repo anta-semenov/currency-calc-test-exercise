@@ -67,7 +67,7 @@ export const getPastExchangeRates = (pastTerms, currentTerm, currencies, baseCur
   )
 }
 
-export const getFutureExchangeRates = (futureTerms, currentRates) => {
+export const getFutureExchangeRates = (futureTerms, currentRates, userCurrencyId = 'USD') => {
   const future = {}
   const currenciesIds = Object.keys(currentRates)
   futureTerms.forEach((term, index) => {
@@ -75,7 +75,7 @@ export const getFutureExchangeRates = (futureTerms, currentRates) => {
       future['' + term + currencyId] = {
         term,
         currencyId,
-        rate: round(currentRates[currencyId]*(1+0.05*(index+1)), 4)
+        rate: currencyId === userCurrencyId ? 1 : round(currentRates[currencyId]*(1+0.05*(index+1)), 4)
       }
     })
   })

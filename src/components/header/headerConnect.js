@@ -10,7 +10,8 @@ const mapStateToProps = state => ({
 
   pastTerms: fromReducer.getPastTerms(state),
   futureTerms: fromReducer.getResultTerms(state),
-  currentTerm: fromReducer.getCurrentTerm(state)
+  currentTerm: fromReducer.getCurrentTerm(state),
+  allExchangeRates: fromReducer.getAllExchangeRates(state)
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -31,7 +32,8 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
     stateProps.userCurrency,
     stateProps.pastTerms,
     stateProps.futureTerms,
-    stateProps.currentTerm
+    stateProps.currentTerm,
+    stateProps.allExchangeRates
   )
 })
 

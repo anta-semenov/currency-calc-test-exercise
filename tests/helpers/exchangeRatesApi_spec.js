@@ -51,7 +51,8 @@ describe('exchange rates api', () => {
       new Date(2016,11,4).getTime()
     ]
     const currentRates = {
-      EUR: 0.8787
+      EUR: 0.8787,
+      USD: 1
     }
     const expectedFutureRates = {
       ['' + new Date(2016,9,4).getTime() + 'EUR']: {
@@ -68,6 +69,21 @@ describe('exchange rates api', () => {
         term: new Date(2016,11,4).getTime(),
         currencyId: 'EUR',
         rate: 1.0105
+      },
+      ['' + new Date(2016,9,4).getTime() + 'USD']: {
+        term: new Date(2016,9,4).getTime(),
+        currencyId: 'USD',
+        rate: 1
+      },
+      ['' + new Date(2016,10,4).getTime() + 'USD']: {
+        term: new Date(2016,10,4).getTime(),
+        currencyId: 'USD',
+        rate: 1
+      },
+      ['' + new Date(2016,11,4).getTime() + 'USD']: {
+        term: new Date(2016,11,4).getTime(),
+        currencyId: 'USD',
+        rate: 1
       }
     }
     expect(getFutureExchangeRates(futureTerms, currentRates)).to.deep.equal(expectedFutureRates)

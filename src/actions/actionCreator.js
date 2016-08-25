@@ -41,8 +41,8 @@ export const initTerms = startDate => dispatch => {
 
 //Initialize future exchange rates
 //We can have future rates from load state, so when we have it we need just change terms
-export const initFutureExchangeRates = (futureTerms, currentRates) => dispatch => {
-  dispatch(setState({exchangeRates: {future: getFutureExchangeRates(futureTerms, currentRates)}}))
+export const initFutureExchangeRates = (futureTerms, currentRates, userCurrency) => dispatch => {
+  dispatch(setState({exchangeRates: {future: getFutureExchangeRates(futureTerms, currentRates, userCurrency.currencyId)}}))
 }
 
 //Add currency
@@ -70,23 +70,34 @@ export const addCurrency = (currency, baseCurrency, pastTerms, futureTerms, curr
 
 //Change user currency
 export const changeUserCurrencyEnd = (newUserCurrency, termsRatesRatio) => ({type: actionTypes.CHANGE_USER_CURRENCY, newUserCurrency, termsRatesRatio})
-export const changeUserCurrency = (newUserCurrency, userCurrency, pastTerms, futureTerms, currentTerm) => dispatch => {
-  getPastExchangeRates(pastTerms, currentTerm, [userCurrency.currencyId], newUserCurrency.currencyId).then(
-    response => {
-      dispatch(recieveRates())
-      const termsRatesRatio = {}
-      values(response).forEach(item => {
-        termsRatesRatio[item.term] = item.rate
-        if (item.term === currentTerm) {
-          futureTerms.forEach(term => {
-            termsRatesRatio[term] = item.rate
-          })
-        }
-      })
-      dispatch(changeUserCurrencyEnd(newUserCurrency, termsRatesRatio))
-    },
-    error => {
-      dispatch(error)
-    }
-  )
+export const changeUserCurrency = (newUserCurrency, userCurrency, pastTerms, futureTerms, currentTerm, allRates) => dispatch => {
+  if (('' +currentTerm + newUserCurrency.currencyId) in allRates) {
+    const termsRatesRatio = {}
+    Object.keys(allRates).forEach(key => {
+      if (allRates[key].currencyId === newUserCurrency.currencyId) {
+        const item = allRates[key]
+        termsRatesRatio[item.term] = 1/item.rate
+      }
+    })
+    dispatch(changeUserCurrencyEnd(newUserCurrency, termsRatesRatio))
+  } else {
+    getPastExchangeRates(pastTerms, currentTerm, [userCurrency.currencyId], newUserCurrency.currencyId).then(
+      response => {
+        dispatch(recieveRates())
+        const termsRatesRatio = {}
+        values(response).forEach(item => {
+          termsRatesRatio[item.term] = item.rate
+          if (item.term === currentTerm) {
+            futureTerms.forEach(term => {
+              termsRatesRatio[term] = item.rate
+            })
+          }
+        })
+        dispatch(changeUserCurrencyEnd(newUserCurrency, termsRatesRatio))
+      },
+      error => {
+        dispatch(error)
+      }
+    )
+  }
 }

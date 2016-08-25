@@ -11,7 +11,7 @@ export const initializeState = (store) => {
   //Init or reinit state
   const currentDate = +new Date()
   const stateCurrentDate = savedState ? fromReducer.getCurrentTerm(savedState) : undefined
-  if (!stateCurrentDate || currentDate - stateCurrentDate > 0.5*86400000) {
+  if (!stateCurrentDate || currentDate - stateCurrentDate > 5*86400000) {
     let startDate = new Date
     startDate.setHours(0)
     startDate.setMinutes(0)
@@ -50,12 +50,14 @@ export const initializeState = (store) => {
         store.dispatch(actions.setState({exchangeRates: {past: response}}))
         store.dispatch(actions.initFutureExchangeRates(
           fromReducer.getResultTerms(store.getState()),
-          fromReducer.getCurrentRates(store.getState())
+          fromReducer.getCurrentRates(store.getState()),
+          fromReducer.getUserCurrency(store.getState())
         ))
       },
       error => {store.dispatch(actions.errorRates(error))}
     )
   } else {
+    console.log(savedState);
     store.dispatch(actions.setState(savedState))
   }
 }
