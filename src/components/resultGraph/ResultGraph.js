@@ -40,7 +40,7 @@ const ResultGraph = ({results, maxValue, colors, currenciesIds}) => {
 
 ResultGraph.propTypes = {
   results: React.PropTypes.array.isRequired,
-  colors: React.PropTypes.array.isRequired,
+  colors: React.PropTypes.object.isRequired,
   maxValue: React.PropTypes.number.isRequired,
   currenciesIds: React.PropTypes.array.isRequired
 }

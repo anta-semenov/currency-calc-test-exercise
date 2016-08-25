@@ -85,9 +85,9 @@ class RateGraph extends React.Component {
 }
 
 RateGraph.propTypes = {
-  pastRates: React.PropTypes.array.isRequired,
-  futureRates: React.PropTypes.array.isRequired,
-  colors: React.PropTypes.array.isRequired,
+  pastRates: React.PropTypes.object.isRequired,
+  futureRates: React.PropTypes.object.isRequired,
+  colors: React.PropTypes.object.isRequired,
   minRate: React.PropTypes.number.isRequired,
   maxRate: React.PropTypes.number.isRequired,
   minTerm: React.PropTypes.number.isRequired,

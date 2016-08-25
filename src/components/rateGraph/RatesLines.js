@@ -30,8 +30,8 @@ const RatesLines = ({rates, colors, scaleX, scaleY}) => {
 RatesLines.propTypes = {
   rates: React.PropTypes.object.isRequired,
   colors: React.PropTypes.object.isRequired,
-  scaleX: React.PropTypes.object.isRequired,
-  scaleY: React.PropTypes.object.isRequired
+  scaleX: React.PropTypes.func.isRequired,
+  scaleY: React.PropTypes.func.isRequired
 }
 
 export default RatesLines

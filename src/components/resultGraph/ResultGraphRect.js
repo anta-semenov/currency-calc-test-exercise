@@ -24,9 +24,9 @@ const ResultGraphRect = ({height, width, x, y, color}) => (
 export default ResultGraphRect
 
 ResultGraphRect.propTypes = {
-  height: React.PropTypes.string.isRequired,
+  height: React.PropTypes.number.isRequired,
   width: React.PropTypes.string.isRequired,
   x: React.PropTypes.string.isRequired,
-  y: React.PropTypes.string.isRequired,
+  y: React.PropTypes.number.isRequired,
   color: React.PropTypes.string.isRequired
 }
