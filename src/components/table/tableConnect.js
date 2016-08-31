@@ -7,6 +7,7 @@ const mapStateToProps = state => ({
   currencies: fromReducer.getCurrenciesForTable(state),
   currenciesForAdding: fromReducer.getCurrenciesForAdding(state),
   useInvest: fromReducer.getUseInvest(state),
+  userCurrencyLabel: fromReducer.getUserCurrencyLabel(state),
 
   pastTerms: fromReducer.getPastTerms(state),
   futureTerms: fromReducer.getFutureTermsArray(state),
@@ -32,6 +33,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
   currencies: stateProps.currencies,
   currenciesForAdding: stateProps.currenciesForAdding,
   useInvest: stateProps.useInvest,
+  userCurrencyLabel: stateProps.userCurrencyLabel,
 
   changeAmount: dispatchProps.changeAmount,
   changeInvestRate: dispatchProps.changeInvestRate,

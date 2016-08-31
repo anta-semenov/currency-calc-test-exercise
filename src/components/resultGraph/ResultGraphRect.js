@@ -7,19 +7,21 @@ const springConfig = {
   precision: 0.1
 }
 
-const ResultGraphRect = ({height, width, x, y, color}) => (
-  <Motion style={{rectHeight: spring(height, springConfig), rectY: spring(y, springConfig)}}>
-    {({rectHeight, rectY}) =>
-      <rect
-        fill={color}
-        x={x}
-        y={rectY}
-        width={width}
-        height={rectHeight}
-      />
-    }
-  </Motion>
-)
+const ResultGraphRect = ({height, width, x, y, color}) => {
+  return(
+    <Motion style={{rectHeight: spring(height, springConfig), rectY: spring(y, springConfig)}}>
+      {({rectHeight, rectY}) =>
+        <rect
+          fill={color}
+          x={x}
+          y={rectY}
+          width={width}
+          height={rectHeight}
+        />
+      }
+    </Motion>
+  )
+}
 
 export default ResultGraphRect
 

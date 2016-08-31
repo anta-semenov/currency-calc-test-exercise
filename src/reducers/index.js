@@ -65,6 +65,7 @@ export const getCurrenciesForTable = createSelector(
 )
 export const getUserCurrency = state => state.userCurrency
 export const getCurrenciesColors = state => fromCurrencies.getCollors(state.currencies)
+export const getUserCurrencyLabel = state => state.userCurrency ? state.userCurrency.label : ''
 
 //UiState
 export const getLoading = state => fromUiState.getLoading(state.uiState)

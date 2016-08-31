@@ -1,14 +1,19 @@
 import React from 'react'
 import './RateGraph.less'
 import RatesLines from './RatesLines'
+import RateLegend from './RateLegend'
 import * as d3 from 'd3'
 
 const height = 200
+const heightStartOffset = 38
+const heightEndOffset = 30
 const width = 250
+const widthStartOffset = 30
+const widthEndOffset = 30
 
 const getScales = props => ({
-  scaleY: d3.scaleLinear().domain([props.minRate, props.maxRate]).range([height-30, 30]),
-  scaleX: d3.scaleLinear().domain([props.minTerm, props.maxTerm]).range([0, width-30])
+  scaleY: d3.scaleLinear().domain([props.minRate, props.maxRate]).range([height - heightStartOffset, heightEndOffset]),
+  scaleX: d3.scaleLinear().domain([props.minTerm, props.maxTerm]).range([widthStartOffset, width - widthEndOffset])
 })
 
 const drawCurrencyCircles = (svg, futureRates, scaleX, scaleY, currencyId, changeRateAction, color) => {
@@ -73,9 +78,18 @@ class RateGraph extends React.Component {
   }
 
   render() {
+
     return(
-      <div>
-        <svg viewBox={`0 0 ${width} ${height}`} width={width} height={height} ref={ref => {this._svg = ref}} >
+      <div className='rate-container'>
+        <svg className='rate-svg' viewBox={`0 0 ${width} ${height}`} width={width} height={height} ref={ref => {this._svg = ref}} >
+          <RateLegend
+            height={height - heightEndOffset - heightStartOffset}
+            width={width - widthStartOffset - widthEndOffset}
+            xStart={widthStartOffset}
+            yStart={heightStartOffset}
+            minRate={this.props.minRate}
+            maxRate={this.props.maxRate}
+          />
           <RatesLines rates={this.props.pastRates} colors={this.props.colors} scaleX={this.state.scaleX} scaleY={this.state.scaleY}/>
           <RatesLines rates={this.props.futureRates} colors={this.props.colors} scaleX={this.state.scaleX} scaleY={this.state.scaleY}/>
         </svg>

@@ -4,10 +4,18 @@
   font-family: 'Open Sans', sans-serif;
   margin: 0px 30px;
   font-size: @font-size-basic;
-  max-width: 800px;
+  max-width: 1000px;
 }
 
 .app-content {
   display: flex;
+  flex-flow: column nowrap;
   margin-top: 20px;
+}
+
+@media screen and (min-width: 800px) {
+  .app-content {
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
 }

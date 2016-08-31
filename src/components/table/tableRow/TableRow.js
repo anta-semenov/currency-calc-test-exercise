@@ -28,7 +28,7 @@ const TableRow = (props) => {
           onChange={(e) => numberInput(e, props.changeAmount)}
         />
       </div>
-      <div className='table-row-user--currency-amount'>{formatNumber(props.amountInUserCurrency)}</div>
+      <div className='table-row--user-currency-amount'>{formatNumber(props.amountInUserCurrency)}</div>
       <input
         className={investStyle}
         disabled={!props.useInvest}
