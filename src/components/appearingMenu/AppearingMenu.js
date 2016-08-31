@@ -1,59 +1,37 @@
 import React from 'react'
 import './AppearingMenu.less'
+import StartComponent from './StartComponent'
+import EndComponent from './EndComponent'
+import MiddleComponent from './MiddleComponent'
 
 export default class AppearingMenu extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isHovering: false
+      isHovering: false,
+      labelWidth: 0,
+      labeHeight: 0
     }
   }
 
-  componentDidUpdate() {
-    if (this.state.prevMainSize) {
-      const currentBodyRect = this._menuBodyNode.getBoundingClientRect()
-      const currentMainSize = this.props.direction === 'vertical' ? currentBodyRect.height : currentBodyRect.width
-      const scaleFactor = this.state.prevMainSize/currentMainSize
-
-      const transform = this.props.direction === 'vertical' ? `scaleY(${scaleFactor})` : `scaleX(${scaleFactor})`
-      this._menuBodyNode.style.transform = transform
-      this._menuBodyNode.style.transition = 'transform 0s'
-
-      if (this.state.isHovering) {
-        this._menuItemsNode.style.opacity = '0'
-      }
-
-      this.setState({prevMainSize: undefined})
-
-      requestAnimationFrame(() => {
-        this._menuBodyNode.style.transform = ''
-        this._menuBodyNode.style.transition = 'transform 0.5s'
-        if (this.state.isHovering) {
-          this._menuItemsNode.style.opacity = '1'
-          this._menuItemsNode.style.transition = 'opacity 0.5s ease-out 0.5s'
-        }
-      })
-    }
+  componentDidMount() {
+    const labelRect = this._labelNode.getBoundingClientRect()
+    this.setState({
+      labelWidth: labelRect.width,
+      labelHeight: labelRect.height
+    })
   }
 
   onMouseOver() {
-    const currentBodyRect = this._menuBodyNode.getBoundingClientRect()
-    const currentMainSize = this.props.direction === 'vertical' ? currentBodyRect.height : currentBodyRect.width
     this.setState({
-      isHovering: true,
-      prevMainSize: currentMainSize
+      isHovering: true
     })
   }
 
   onMouseOut() {
     requestAnimationFrame(() => {
-      this._menuItemsNode.style.opacity = '0'
-      this._menuBodyNode.style.transition = 'opacity 500ms'
-      const currentBodyRect = this._menuBodyNode.getBoundingClientRect()
-      const currentMainSize = this.props.direction === 'vertical' ? currentBodyRect.height : currentBodyRect.width
       this.setState({
-        isHovering: false,
-        prevMainSize: currentMainSize
+        isHovering: false
       })
     })
 
@@ -73,25 +51,42 @@ export default class AppearingMenu extends React.Component {
         <div
           className='am-menu-label'
           onClick={() => this.onClick()}
+          ref={ref => {this._labelNode = ref}}
         >
           {this.props.labelComponent}
         </div>
         <div
           className='am-menu-body'
-          ref={ref => {this._menuBodyNode = ref}}
           style={{flexDirection: this.props.direction === 'vertical' ? 'column' : 'row'}}
           onClick={() => this.onClick()}
         >
-          <div style={{opacity:0, padding: '2px'}}>
-            {this.props.labelComponent}
-          </div>
-          {this.state.isHovering ?
-          <div
-            className='am-menu-items'
-            style={{flexDirection: this.props.direction === 'vertical' ? 'column' : 'row'}}
-            ref={ref => {this._menuItemsNode = ref}}
-          >{this.props.menuItems}</div> :
-           null}
+          <StartComponent
+            direction={this.props.direction}
+            styles={{
+              ...this.props.styles,
+              height: this.state.labelHeight,
+              width: this.state.labelWidth
+            }}
+          />
+          <MiddleComponent
+            menuItems={this.props.menuItems}
+            direction={this.props.direction}
+            styles={{
+              ...this.props.styles,
+              minHeight: this.state.labelHeight,
+              minWidth: this.state.labelWidth
+            }}
+            isHovering={this.state.isHovering}
+          />
+          <EndComponent
+            direction={this.props.direction}
+            styles={{
+              ...this.props.styles,
+              height: this.state.labelHeight,
+              width: this.state.labelWidth
+            }}
+            isHovering={this.state.isHovering}
+          />
         </div>
       </div>
     )
