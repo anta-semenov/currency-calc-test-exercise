@@ -1,8 +1,6 @@
 import React from 'react'
 import './AppearingMenu.less'
-import StartComponent from './StartComponent'
-import EndComponent from './EndComponent'
-import MiddleComponent from './MiddleComponent'
+import ItemsComponent from './ItemsComponent'
 
 export default class AppearingMenu extends React.Component {
   constructor(props) {
@@ -47,47 +45,23 @@ export default class AppearingMenu extends React.Component {
 
   render() {
     return(
-      <div className='am-base-element'>
+      <div className='am-base-element' onClick={() => this.onClick()}>
         <div
           className='am-menu-label'
-          onClick={() => this.onClick()}
           ref={ref => {this._labelNode = ref}}
         >
           {this.props.labelComponent}
         </div>
-        <div
-          className='am-menu-body'
-          style={{flexDirection: this.props.direction === 'vertical' ? 'column' : 'row'}}
-          onClick={() => this.onClick()}
-        >
-          <StartComponent
-            direction={this.props.direction}
-            styles={{
-              ...this.props.styles,
-              height: this.state.labelHeight,
-              width: this.state.labelWidth
-            }}
-          />
-          <MiddleComponent
-            menuItems={this.props.menuItems}
-            direction={this.props.direction}
-            styles={{
-              ...this.props.styles,
-              minHeight: this.state.labelHeight,
-              minWidth: this.state.labelWidth
-            }}
-            isHovering={this.state.isHovering}
-          />
-          <EndComponent
-            direction={this.props.direction}
-            styles={{
-              ...this.props.styles,
-              height: this.state.labelHeight,
-              width: this.state.labelWidth
-            }}
-            isHovering={this.state.isHovering}
-          />
-        </div>
+        <ItemsComponent
+          menuItems={this.props.menuItems}
+          direction={this.props.direction}
+          styles={{
+            ...this.props.styles,
+            minHeight: this.state.labelHeight,
+            minWidth: this.state.labelWidth
+          }}
+          isHovering={this.state.isHovering}
+        />
       </div>
     )
   }
@@ -97,7 +71,5 @@ AppearingMenu.propTypes = {
   labelComponent: React.PropTypes.element.isRequired,
   menuItems: React.PropTypes.arrayOf(React.PropTypes.element).isRequired,
   styles: React.PropTypes.object,
-  direction: React.PropTypes.oneOf(['horizontal','vertical']),
-  baseMainDirectionSize: React.PropTypes.number,
-  baseCrossDirectionSize: React.PropTypes.number
+  direction: React.PropTypes.oneOf(['horizontal','vertical'])
 }
