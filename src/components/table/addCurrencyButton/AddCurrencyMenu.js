@@ -7,10 +7,10 @@ const AddCurrencyMenu = ({currenciesForAdding, addCurrency}) => {
   const items = currenciesForAdding.map(item => (
     <AddCurrencyButton {...item} addCurrency={addCurrency} key={item.currencyId}/>
   ))
-  const labelComponent = <div className='add-currency-label' />
+  const labelComponent = <div className='add-currency-label' >+ Currency</div>
   return(
     <div className='add-currency-menu'>
-      <AppearingMenu labelComponent={labelComponent} menuItems={items}/>
+      <AppearingMenu labelComponent={labelComponent} menuItems={items} className='add-currency-border-style'/>
     </div>
   )
 }

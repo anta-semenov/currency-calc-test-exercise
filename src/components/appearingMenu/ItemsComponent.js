@@ -62,7 +62,7 @@ export default class ItemsComponent extends React.Component {
   }
 
   render() {
-    const {direction, styles, isHovering, menuItems} = this.props
+    const {direction, styles, isHovering, menuItems, className} = this.props
     const middleStyles = direction === 'vertical' ?
       {
         borderRadius: '0',
@@ -116,8 +116,8 @@ export default class ItemsComponent extends React.Component {
         className='am-menu-body'
         style={{flexDirection: this.props.direction === 'vertical' ? 'column' : 'row'}}
       >
-        <div className='am-menu-default-border' style={{...styles, ...startStyles}} />
-        <div className='am-menu-default-border am-menu-middle-component'
+        <div className={className || 'am-menu-default-border'} style={{...styles, ...startStyles}} />
+        <div className={`${className || 'am-menu-default-border'} am-menu-middle-component`}
           style={{...styles, ...middleStyles}}
           ref={ref => {this._ref = ref}}
         >
@@ -141,7 +141,7 @@ export default class ItemsComponent extends React.Component {
            null}
         </div>
         <div
-          className='am-menu-default-border'
+          className={className || 'am-menu-default-border'}
           style={{...styles, ...endStyles}}
           ref={ref => {this._endComponentNode = ref}}
         />
@@ -154,5 +154,6 @@ ItemsComponent.propTypes = {
   menuItems: React.PropTypes.arrayOf(React.PropTypes.element).isRequired,
   direction: React.PropTypes.oneOf(['horizontal','vertical']),
   isHovered: React.PropTypes.bool,
-  styles: React.PropTypes.object
+  styles: React.PropTypes.object,
+  className: React.PropTypes.string
 }

@@ -45,7 +45,11 @@ export default class AppearingMenu extends React.Component {
 
   render() {
     return(
-      <div className='am-base-element' onClick={() => this.onClick()}>
+      <div className='am-base-element'
+        onClick={() => this.onClick()}
+        onMouseEnter={() => this.onMouseOver()}
+        onMouseLeave={() => this.onMouseOut()}
+      >
         <div
           className='am-menu-label'
           ref={ref => {this._labelNode = ref}}
@@ -56,11 +60,11 @@ export default class AppearingMenu extends React.Component {
           menuItems={this.props.menuItems}
           direction={this.props.direction}
           styles={{
-            ...this.props.styles,
             minHeight: this.state.labelHeight,
             minWidth: this.state.labelWidth
           }}
           isHovering={this.state.isHovering}
+          className={this.props.className}
         />
       </div>
     )
@@ -70,6 +74,6 @@ export default class AppearingMenu extends React.Component {
 AppearingMenu.propTypes = {
   labelComponent: React.PropTypes.element.isRequired,
   menuItems: React.PropTypes.arrayOf(React.PropTypes.element).isRequired,
-  styles: React.PropTypes.object,
+  className: React.PropTypes.string,
   direction: React.PropTypes.oneOf(['horizontal','vertical'])
 }

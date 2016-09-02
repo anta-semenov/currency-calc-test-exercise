@@ -1,8 +1,48 @@
+@import '../../../constants/styleVariables';
+
 .user-currency-menu {
   display:flex;
   flex-flow: row nowrap;
+  align-items: baseline;
+
+  opacity: 0.85;
+  transform: opacity 200ms;
+
+  margin-right: 20px;
+
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .user-currency-title {
   padding-right: 5px;
+}
+
+.user-currency-label {
+  position: relative;
+  text-align: center;
+  width: 35px;
+  padding: 2px 0 1px 0;
+  color: @color-add-currency-background;
+  display: inline-block;;
+}
+
+.user-currency-triangle-svg {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  padding-bottom: 2px;
+}
+
+.user-currency-triangle {
+  stroke: @color-add-currency-background;
+  fill: @color-add-currency-background;
+  color: @color-add-currency-background;
+}
+
+.user-currency-border-style {
+  border: 1px solid @color-add-currency-background;
+  border-radius: 3px;
+  background-color: @color-add-currency-color;
 }

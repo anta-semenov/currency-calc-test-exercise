@@ -1,7 +1,13 @@
 
+.am-base-element {
+  position: relative;
+}
+
 .am-menu-label {
-  position: absolute;
+  position: relative;
   z-index: 2;
+  top: 0;
+  left: 0;
 
   padding: 2px;
   cursor: pointer;
@@ -10,6 +16,8 @@
 .am-menu-body {
   position: absolute;
   z-index: 1;
+  top: 0;
+  left: 0;
 
   display: flex;
   flex-wrap: nowrap;
@@ -25,6 +33,7 @@
 .am-menu-middle-component {
   display: flex;
   flex-wrap: nowrap;
+  //align-items: center;
 
   transform-origin: 0 0;
 }
@@ -32,6 +41,6 @@
 .am-menu-items {
   display: flex;
   flex-wrap: nowrap;
-  align-content: center;
   justify-content: flex-end;
+  align-items: center;
 }
