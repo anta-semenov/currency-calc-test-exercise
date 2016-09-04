@@ -13,7 +13,18 @@ const RateNet = ({height, width, xStart, yStart, minRate, maxRate}) => {
     <path d={`M${xStart + (width/xIntervalsCount)*index},${yStart} l0,${height}`} key={`vl${index}`} className='rate-net-line'/>
   )
   const yLegend = Array.from(new Array(yIntervalsCount), (item, index) =>
-    <text x={xStart - 2} y={yStart + (height/yIntervalsCount)*index} dy='9' textAnchor='end' key={`yl${index}`} >{d3.format('d')(maxRate-(maxRate-minRate)/yIntervalsCount*index)}</text>
+    <text
+      x={xStart - 2}
+      y={yStart + (height/yIntervalsCount)*index}
+      dy='9' textAnchor='end'
+      key={`yl${index}`}
+    >
+      {d3.format(
+        maxRate-minRate > 20 ?
+        'd' :
+        '.1f'
+      )(maxRate-(maxRate-minRate)/yIntervalsCount*index)}
+    </text>
   )
 
   return(
