@@ -5,10 +5,10 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.export = {
   devtool: 'cheap-module-source-map',
-  entry: '.src/index',
+  entry: './src/index',
   output: {
-    filename: 'bundle.js',
-    path: path.join(__dirname, 'dist')
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js'
   },
   module: {
     loaders: [
@@ -30,7 +30,6 @@ module.export = {
         'NODE_ENV': JSON.stringify('production')
       }
     }),
-    new ExtractTextPlugin('style.css'),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
@@ -40,6 +39,9 @@ module.export = {
       }
     }),
     new webpack.optimize.DedupePlugin(),
-
-  ]
+    new ExtractTextPlugin('style.css')
+  ],
+  postcss: function() {
+    return [autoprefixer]
+  }
 }
