@@ -1,6 +1,7 @@
 import React from 'react'
 import TableRow from './tableRow/TableRow'
 import AddCurrencyMenu from './addCurrencyButton/AddCurrencyMenu'
+import FlipMove from 'react-flip-move'
 import classnames from 'classnames'
 import './Table.less'
 
@@ -17,16 +18,18 @@ const Table = ({currencies, changeAmount, changeInvestRate, useInvest, removeCur
           <div className='table-header--second-column'>{`In my currency, ${userCurrencyLabel || ''}`}</div>
           <div className={investStyle}>Invest rate, %</div>
         </div>
-        {currencies.map(item =>
-          <TableRow
-            key={item.currencyId}
-            changeAmount={newAmount => changeAmount(item.currencyId, newAmount)}
-            changeInvestRate={newInvestRate => changeInvestRate(item.currencyId, newInvestRate)}
-            useInvest={useInvest}
-            removeCurrency={() => removeCurrency(item.currencyId)}
-            {...item}
-          />
-        )}
+        <FlipMove enterAnimation="fade" leaveAnimation="fade">
+          {currencies.map(item =>
+            <TableRow
+              key={item.currencyId}
+              changeAmount={newAmount => changeAmount(item.currencyId, newAmount)}
+              changeInvestRate={newInvestRate => changeInvestRate(item.currencyId, newInvestRate)}
+              useInvest={useInvest}
+              removeCurrency={() => removeCurrency(item.currencyId)}
+              {...item}
+            />
+          )}
+        </FlipMove>
       </div>
       {rest.currenciesForAdding.length > 0 ? <AddCurrencyMenu {...rest} /> : null}
     </div>

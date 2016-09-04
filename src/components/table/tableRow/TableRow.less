@@ -23,19 +23,23 @@
 
 .table-row--label-amount-cell {
   width: @first-column-width;
+  max-width: @first-column-width;
   margin-right: @column-distance;
+
+  box-sizing: border-box;
 
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
 }
 .table-row--label {
+  position: relative;
   color: #ffffff;
   border-radius: 2px;
   padding: 0px 2px 0px 2px;
   font-size: @font-size-basic;
   text-align: center;
-  width: 30px;
+  width: @size-currency-icon;
   margin-right: 5px;
   flex-shrink: 0;
   cursor: pointer;
@@ -60,7 +64,7 @@
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    width: 30px;
+    width: @size-currency-icon;
     height: @font-size-basic + 3;
     opacity: 0;
     transition: opacity 200ms;
@@ -70,15 +74,15 @@
 .table-row--amount {
   .input-field();
   flex-grow: 1;
-  min-width: 40px;
+  width: 30px;
 }
 
 .table-row--user-currency-amount {
-  width: @second-column-width*0.8;
+  width: @second-column-width*0.7;
   margin-right: @column-distance;
   font-size: @font-size-basic;
   text-align: right;
-  padding-right: @second-column-width*0.2;
+  padding-right: @second-column-width*0.3;
 }
 
 .table-row--invest {

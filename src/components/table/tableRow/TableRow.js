@@ -12,32 +12,34 @@ const numberInput = (e, action, decimal) => {
 
 const formatNumber = number => number.toString(10).replace(/(\d)(?=(?:\d{3})+($|\.))/g, '$1 ')
 
-const TableRow = (props) => {
-  const investStyle = classnames({
-    'table-row--invest': true,
-    hidden: !props.useInvest
-  })
-  return(
-    <div className='table-row'>
-      <div className='table-row--label-amount-cell'>
-        <div className='table-row--label' style={{backgroundColor: props.color}} onClick={props.removeCurrency}>{props.label}</div>
+export default class TableRow extends React.Component {
+  render() {
+    const investStyle = classnames({
+      'table-row--invest': true,
+      hidden: !this.props.useInvest
+    })
+    return(
+      <div className='table-row'>
+        <div className='table-row--label-amount-cell'>
+          <div className='table-row--label' style={{backgroundColor: this.props.color}} onClick={this.props.removeCurrency}>{this.props.label}</div>
+          <input
+            className='table-row--amount'
+            placeholder='0'
+            value={this.props.initialAmount === 0 ? undefined : formatNumber(this.props.initialAmount)}
+            onChange={(e) => numberInput(e, this.props.changeAmount)}
+          />
+        </div>
+        <div className='table-row--user-currency-amount'>{formatNumber(this.props.amountInUserCurrency)}</div>
         <input
-          className='table-row--amount'
+          className={investStyle}
+          disabled={!this.props.useInvest}
           placeholder='0'
-          value={props.initialAmount === 0 ? undefined : formatNumber(props.initialAmount)}
-          onChange={(e) => numberInput(e, props.changeAmount)}
+          value={this.props.investRate === 0 && this.props.useInvest ? '' : this.props.investRate}
+          onChange={(e) => numberInput(e, this.props.changeInvestRate, true)}
         />
       </div>
-      <div className='table-row--user-currency-amount'>{formatNumber(props.amountInUserCurrency)}</div>
-      <input
-        className={investStyle}
-        disabled={!props.useInvest}
-        placeholder='0'
-        value={props.investRate === 0 && props.useInvest ? '' : props.investRate}
-        onChange={(e) => numberInput(e, props.changeInvestRate, true)}
-      />
-    </div>
-  )
+    )
+  }
 }
 
 TableRow.propTypes = {
@@ -51,5 +53,3 @@ TableRow.propTypes = {
   changeAmount: React.PropTypes.func.isRequired,
   changeInvestRate: React.PropTypes.func.isRequired
 }
-
-export default TableRow
