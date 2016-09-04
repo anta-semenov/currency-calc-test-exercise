@@ -3,6 +3,7 @@ import Table from '../table/tableConnect'
 import Header from '../header/headerConnect'
 import Results from '../resultGraph/resultGraphConnect'
 import Rates from '../rateGraph/rateGraphConnect'
+import Loading from '../loading/loadingConnect'
 import './App.less'
 
 const App = () => (
@@ -10,9 +11,12 @@ const App = () => (
     <Header />
     <div className='app-content'>
       <Table />
-      <Rates />
-      <Results />
+      <div className='app-graphs'>
+        <Rates />
+        <Results />
+      </div>
     </div>
+    <Loading />
   </div>
 )
 

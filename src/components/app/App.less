@@ -13,9 +13,26 @@
   margin-top: 20px;
 }
 
+.app-graphs {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+@media screen and (min-width: 510px) {
+  .app-graphs {
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
+}
+
 @media screen and (min-width: 800px) {
   .app-content {
     flex-flow: row nowrap;
     justify-content: space-between;
+  }
+
+  .app-graphs {
+    width: 60%;
+    margin-left: 3%;
   }
 }
