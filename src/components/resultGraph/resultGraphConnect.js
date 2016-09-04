@@ -3,6 +3,14 @@ import ResultGraph from './ResultGraph'
 import * as fromReducer from '../../reducers'
 
 const getD3ResultGraphStackInput = state => {
+  if (fromReducer.getLoading(state)) {
+    return({
+      results: [],
+      maxValue: 1000,
+      todayTotal: 0,
+      yearTotal: 0
+    })
+  }
   const temp = {}
   const currenciesIds = fromReducer.getCurrenciesIds(state)
   let maxValue = 0
@@ -25,7 +33,7 @@ const getD3ResultGraphStackInput = state => {
     })
     maxValue = Math.max(maxValue, sumValue)
   })
-
+  maxValue = Math.max(maxValue, 1000)
   const results = []
   Object.keys(temp).forEach(key => results.push(temp[key]))
   return {maxValue, results, todayTotal, yearTotal}
@@ -37,7 +45,8 @@ const mapStateToProps = state => {
     ...data,
     colors: fromReducer.getCurrenciesColors(state),
     currenciesIds: fromReducer.getCurrenciesIds(state),
-    userCurrencyLabel: fromReducer.getUserCurrencyLabel(state)
+    userCurrencyLabel: fromReducer.getUserCurrencyLabel(state),
+    loading: fromReducer.getLoading(state)
   })
 }
 
