@@ -25,7 +25,7 @@ module.exports = {
       }
     }),
     new webpack.optimize.DedupePlugin(),
-    new ExtractTextPlugin('dist/style.css')
+    new ExtractTextPlugin('style.css')
   ],
   module: {
     loaders: [
@@ -36,7 +36,7 @@ module.exports = {
       },
       {
         test: /\.less/,
-        loader: ExtractTextPlugin.extract('style', 'css!postcss!less'),
+        loader: ExtractTextPlugin.extract('css!postcss!less'),
         include: path.join(__dirname, 'src')
       }
     ]
