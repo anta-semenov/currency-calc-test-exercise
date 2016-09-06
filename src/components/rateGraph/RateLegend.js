@@ -32,11 +32,11 @@ const RateNet = ({height, width, xStart, yStart, minRate, maxRate}) => {
         {horizontalLines}
         {verticalLines}
         {yLegend}
-        <text x={xStart} y={yStart + height + 14} >year ago</text>
-        <text x={xStart + width/2} y={yStart + height + 14} textAnchor='middle' >today</text>
-        <text x={xStart + width} y={yStart + height + 14} textAnchor='end' >in a year</text>
-        <text x={xStart} y='4' dy='9' className='rate-graph-title'>Rate's history and forecasts</text>
-        <text x={xStart} y='18' dy='9' className='rate-graph-subtitle'>Move points for changing forecast</text>
+        <text x={xStart} y={yStart + height + 14} >{'year ago'.toLocaleString()}</text>
+        <text x={xStart + width/2} y={yStart + height + 14} textAnchor='middle' >{'today'.toLocaleString()}</text>
+        <text x={xStart + width} y={yStart + height + 14} textAnchor='end' >{'in a year'.toLocaleString()}</text>
+        <text x={xStart} y='4' dy='9' className='rate-graph-title'>{"Rate's history and forecasts".toLocaleString()}</text>
+        <text x={xStart} y='18' dy='9' className='rate-graph-subtitle'>{'Move points for changing forecast'.toLocaleString()}</text>
       </g>
   )
 }

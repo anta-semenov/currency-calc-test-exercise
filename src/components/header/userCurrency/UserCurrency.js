@@ -13,7 +13,7 @@ const UserCurrency = ({userCurrency, availableCurrencies, changeUserCurrency}) =
   </div>
   return(
     <div className='user-currency-menu'>
-      <div className='user-currency-title'>My currency</div>
+      <div className='user-currency-title'>{'My currency'.toLocaleString()}</div>
       <AppearingMenu
         labelComponent={labelComponent}
         menuItems={items}

@@ -14,9 +14,9 @@ const Table = ({currencies, changeAmount, changeInvestRate, useInvest, removeCur
     <div className='table-container'>
       <div className='table'>
         <div className='table-header'>
-          <div className='table-header--first-column'>Savings</div>
-          <div className='table-header--second-column'>{`In my currency, ${userCurrencyLabel || ''}`}</div>
-          <div className={investStyle}>Invest rate, %</div>
+          <div className='table-header--first-column'>{'Savings'.toLocaleString()}</div>
+          <div className='table-header--second-column'>{`${'In my currency'.toLocaleString()}, ${userCurrencyLabel || ''}`}</div>
+          <div className={investStyle}>{`${'Invest rate'.toLocaleString()}, %`}</div>
         </div>
         <FlipMove enterAnimation="fade" leaveAnimation="fade">
           {currencies.map(item =>
