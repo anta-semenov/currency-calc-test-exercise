@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'eval',
@@ -11,9 +12,13 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: '/'
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: './index.html'
+    }),
     new webpack.HotModuleReplacementPlugin()
   ],
   module: {
@@ -28,7 +33,7 @@ module.exports = {
       include: path.join(__dirname, 'src')
     }],
     postcss: function () {
-      return [require('autoprefixer'), require('cssnano')];
+      return [require('autoprefixer')];
     }
   }
 };

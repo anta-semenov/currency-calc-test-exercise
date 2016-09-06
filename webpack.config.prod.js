@@ -1,6 +1,8 @@
 var path = require('path');
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
+var cssnano = require('cssnano')
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
@@ -11,6 +13,22 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: './index.html',
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true
+      }
+    }),
     new webpack.DefinePlugin({
       'process.env' : {
         'NODE_ENV': JSON.stringify('production')
@@ -42,6 +60,6 @@ module.exports = {
     ]
   },
   postcss: function() {
-    return [autoprefixer]
+    return [autoprefixer, cssnano]
   }
 }
