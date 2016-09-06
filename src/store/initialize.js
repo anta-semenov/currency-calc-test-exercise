@@ -70,7 +70,7 @@ export const initializeState = (store) => {
   //Init or reinit state
   const currentDate = +new Date()
   const stateCurrentDate = savedState ? fromReducer.getCurrentTerm(savedState) : undefined
-  if (!stateCurrentDate || currentDate - stateCurrentDate > 1.5*86400000 || fromReducer.getError !== undefined) {
+  if (!stateCurrentDate || currentDate - stateCurrentDate > 2*86400000 || fromReducer.getError !== undefined) {
     let startDate = new Date
     startDate.setHours(0)
     startDate.setMinutes(0)

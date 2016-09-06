@@ -5,9 +5,9 @@ import ResultGraphRect from './ResultGraphRect'
 import ResultGraphLegend from './ResultGraphLegend'
 import ceil from 'lodash/ceil'
 
-const height = 200
+const height = 205
 const yStartOffset = 10
-const yEndOffset = 30
+const yEndOffset = 35
 const width = 270
 const xStartOffset = 30
 const xEndOffset = 50
