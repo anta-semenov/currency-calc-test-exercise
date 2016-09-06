@@ -19,15 +19,15 @@ const ResultGraphLegend = ({height, width, yStart, xStart, maxResult, ySignsCoun
     switch (numberOfThousandGroups) {
       case 1:
         return(
-          <text x={xStart} y={yStart} >{`th. ${userCurrencyLabel}`}</text>
+          <text x={xStart} y={yStart} >{`${'th.'.toLocaleString()} ${userCurrencyLabel}`}</text>
         )
       case 2:
         return(
-          <text x={xStart} y={yStart} >{`bln. ${userCurrencyLabel}`}</text>
+          <text x={xStart} y={yStart} >{`${'bln.'.toLocaleString()} ${userCurrencyLabel}`}</text>
         )
       case 3:
         return(
-          <text x={xStart} y={yStart} >{`blr. ${userCurrencyLabel}`}</text>
+          <text x={xStart} y={yStart} >{`${'blr.'.toLocaleString()} ${userCurrencyLabel}`}</text>
         )
       default:
         return null
@@ -47,8 +47,8 @@ const ResultGraphLegend = ({height, width, yStart, xStart, maxResult, ySignsCoun
     <g>
       {yLegend}
       {maxResultText(numberOfThousandGroups)}
-      <text x={xStart} y={yStart + height + 14} >today</text>
-      <text x={xStart + width} y={yStart + height + 14} textAnchor='end' textLength={yearTitleOffset} >in a year</text>
+      <text x={xStart} y={yStart + height + 14} >{'today'.toLocaleString()}</text>
+      <text x={xStart + width} y={yStart + height + 14} textAnchor='end' textLength={yearTitleOffset} >{'in a year'.toLocaleString()}</text>
       <text x={xStart} y={yStart + height + 30} className='result-total-label'>{`${totalFormate(todayTotal)} ${userCurrencyLabel}`}</text>
       <text x={xStart + width - yearTitleOffset} y={yStart + height + 30} className='result-total-label'>{`${totalFormate(yearTotal)} ${userCurrencyLabel}`}</text>
     </g>

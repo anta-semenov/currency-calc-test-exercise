@@ -5,9 +5,9 @@ import UserCurrency from './userCurrency/UserCurrency'
 const Header = ({useInvest, changeUseInvest, ...rest}) => (
   <div className='header'>
     <div className='header-left-container'>
-      <div className='banner'>Savings Forecast</div>
+      <div className='banner'>{'Savings Forecast'.toLocaleString()}</div>
       <input type='checkbox' checked={useInvest} onChange={changeUseInvest}/>
-      <div className='use-invest-label'>Count on Deposits</div>
+      <div className='use-invest-label'>{'Count on Deposits'.toLocaleString()}</div>
     </div>
     <UserCurrency {...rest}/>
   </div>
