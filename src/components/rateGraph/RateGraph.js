@@ -23,9 +23,9 @@ const drawCurrencyCircles = (svg, futureRates, scaleX, scaleY, currencyId, chang
     .attr('r', 3)
     .attr('fill', color)
     .style('cursor', 'ns-resize')
-    .call(d3.drag().on('drag', d => changeRateAction(currencyId, d.term, scaleY.invert(d3.event.y))))
   .merge(circles).attr('cx', d => scaleX(d.term))
     .attr('cy', d => scaleY(d.rate))
+    .call(d3.drag().on('drag', d => changeRateAction(currencyId, d.term, scaleY.invert(d3.event.y))))
 
   circles.exit()
     .remove()
