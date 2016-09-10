@@ -21,6 +21,11 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin()
   ],
+  resolve: {
+    alias: {
+      '_styleVariables.less': path.resolve('./src/constants/styleVariables.less')
+    }
+  },
   module: {
     loaders: [{
       test: /\.js$/,

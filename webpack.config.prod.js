@@ -45,6 +45,11 @@ module.exports = {
     new webpack.optimize.DedupePlugin(),
     new ExtractTextPlugin('style.css')
   ],
+  resolve: {
+    alias: {
+      '_styleVariables.less': path.resolve('./src/constants/styleVariables.less')
+    }
+  },
   module: {
     loaders: [
       {
