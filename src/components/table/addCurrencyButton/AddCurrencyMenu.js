@@ -44,13 +44,28 @@ export default class AddCurrencyMenu extends React.Component {
 
   render() {
     const {currenciesForAdding} = this.props
+
     const items = currenciesForAdding.map(item => (
-      <AddCurrencyButton {...item} addCurrency={(...args) => this.addCurrencyWithAnimation(...args)} key={item.currencyId}/>
+      <AddCurrencyButton
+        {...item}
+        addCurrency={(...args) => this.addCurrencyWithAnimation(...args)}
+        key={item.currencyId}
+      />
     ))
-    const labelComponent = <div className='add-currency-label' >{'+ Currency'.toLocaleString()}</div>
+    
+    const labelComponent = (
+      <div className='add-currency-label' >
+        {'+ Currency'.toLocaleString()}
+      </div>
+    )
+
     return(
       <div className='add-currency-menu' ref={ref => {this._ref = ref}}>
-        <AppearingMenu labelComponent={labelComponent} menuItems={items} className='add-currency-border-style'/>
+        <AppearingMenu
+          labelComponent={labelComponent}
+          menuItems={items}
+          className='add-currency-border-style'
+        />
       </div>
     )
   }

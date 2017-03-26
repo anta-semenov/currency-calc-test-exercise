@@ -8,7 +8,7 @@ export default class AppearingMenu extends React.Component {
     this.state = {
       isHovering: false,
       labelWidth: 0,
-      labeHeight: 0
+      labelHeight: 0
     }
   }
 
@@ -21,8 +21,10 @@ export default class AppearingMenu extends React.Component {
   }
 
   onMouseOver() {
-    this.setState({
-      isHovering: true
+    requestAnimationFrame(() => {
+      this.setState({
+        isHovering: true
+      })
     })
   }
 
@@ -32,7 +34,6 @@ export default class AppearingMenu extends React.Component {
         isHovering: false
       })
     })
-
   }
 
   onClick() {
@@ -44,6 +45,10 @@ export default class AppearingMenu extends React.Component {
   }
 
   render() {
+    const {menuItems, direction, className, labelComponent} = this.props
+    const {labelHeight, labelWidth, isHovering} = this.state
+
+
     return(
       <div className='am-base-element'
         onClick={() => this.onClick()}
@@ -54,17 +59,17 @@ export default class AppearingMenu extends React.Component {
           className='am-menu-label'
           ref={ref => {this._labelNode = ref}}
         >
-          {this.props.labelComponent}
+          {labelComponent}
         </div>
         <ItemsComponent
-          menuItems={this.props.menuItems}
-          direction={this.props.direction}
+          menuItems={menuItems}
+          direction={direction}
           styles={{
-            minHeight: this.state.labelHeight,
-            minWidth: this.state.labelWidth
+            minHeight: labelHeight,
+            minWidth: labelWidth
           }}
-          isHovering={this.state.isHovering}
-          className={this.props.className}
+          isHovering={isHovering}
+          className={className}
         />
       </div>
     )

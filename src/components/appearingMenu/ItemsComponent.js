@@ -20,24 +20,27 @@ export default class ItemsComponent extends React.Component {
 
   componentDidUpdate() {
     if (this.state.prevMainSize) {
-      const rect = this._ref.getBoundingClientRect()
-      const mainSize = this.props.direction === 'vertical' ? rect.height : rect.width
-      const scaleFactor = this.state.prevMainSize/mainSize
+      const {direction, isHovering} = this.props
+      const {prevMainSize, prevEndPosition} = this.state
 
-      const transform = this.props.direction === 'vertical' ? `scaleY(${scaleFactor})` : `scaleX(${scaleFactor})`
+      const rect = this._ref.getBoundingClientRect()
+      const mainSize = direction === 'vertical' ? rect.height : rect.width
+      const scaleFactor = prevMainSize/mainSize
+
+      const transform = direction === 'vertical' ? `scaleY(${scaleFactor})` : `scaleX(${scaleFactor})`
       this._ref.style.transform = transform
       this._ref.style.transition = 'transform 0s'
 
       const endRect = this._endComponentNode.getBoundingClientRect()
-      const position = this.props.direction === 'vertical' ? endRect.top : endRect.left
-      const endTransform = this.props.direction === 'vertical' ?
-        `translateY(${this.state.prevEndPosition - position}px)` :
-        `translateX(${this.state.prevEndPosition - position}px)`
+      const position = direction === 'vertical' ? endRect.top : endRect.left
+      const endTransform = direction === 'vertical' ?
+        `translateY(${prevEndPosition - position}px)` :
+        `translateX(${prevEndPosition - position}px)`
 
       this._endComponentNode.style.transform = endTransform
       this._endComponentNode.style.transition = 'transform 0s'
 
-      if (this.props.isHovering) {
+      if (isHovering) {
         this._menuItemsNode.style.opacity = '0'
       }
 
@@ -47,6 +50,8 @@ export default class ItemsComponent extends React.Component {
       })
 
       requestAnimationFrame(() => {
+        if (!this._ref || !this._endComponentNode) return
+
         this._ref.style.transform = ''
         this._ref.style.transition = 'transform 0.5s'
 
@@ -114,10 +119,11 @@ export default class ItemsComponent extends React.Component {
     return(
       <div
         className='am-menu-body'
-        style={{flexDirection: this.props.direction === 'vertical' ? 'column' : 'row'}}
+        style={{flexDirection: direction === 'vertical' ? 'column' : 'row'}}
       >
         <div className={className || 'am-menu-default-border'} style={{...styles, ...startStyles}} />
-        <div className={`${className || 'am-menu-default-border'} am-menu-middle-component`}
+        <div
+          className={`${className || 'am-menu-default-border'} am-menu-middle-component`}
           style={{...styles, ...middleStyles}}
           ref={ref => {this._ref = ref}}
         >
@@ -132,13 +138,15 @@ export default class ItemsComponent extends React.Component {
               width: (styles.minWidth || 6) - 6
             }
           }/>
-          {isHovering ?
-          <div
-            className='am-menu-items'
-            style={{flexDirection: direction === 'vertical' ? 'column' : 'row'}}
-            ref={ref => {this._menuItemsNode = ref}}
-          >{menuItems}</div> :
-           null}
+          {
+            isHovering ?
+            <div
+              className='am-menu-items'
+              style={{flexDirection: direction === 'vertical' ? 'column' : 'row'}}
+              ref={ref => {this._menuItemsNode = ref}}
+            >{menuItems}</div> :
+             null
+           }
         </div>
         <div
           className={className || 'am-menu-default-border'}
